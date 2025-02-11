@@ -14,7 +14,7 @@ const drawerWidth = 500;
 const RecipeReviewCard = ()=> {
 
   const fetcher = async()=>{
-    const response = await axios.get("http://192.168.16.108:5000/api/antrianDM");
+    const response = await axios.get("http://localhost:5000/api/antrianDM");
     return response.data;
   };
 

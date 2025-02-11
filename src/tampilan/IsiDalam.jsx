@@ -10,7 +10,7 @@ import useSWR from "swr";
 const IsiDalam =()=>{
 
     const fetcher = async()=>{
-      const response = await axios.get("http://192.168.16.108:5000/api/antrianDMS");
+      const response = await axios.get("http://localhost:5000/api/antrianDMS");
       return response.data;
     };
   

@@ -5,7 +5,7 @@ import useSWR from "swr";
 const KarcisList = ()=>{
 
     const fetcher = async()=>{
-        const response = await axios.get("http://192.168.16.108:5000/api/antrianM");
+        const response = await axios.get("http://localhost:5000/api/antrianM");
         return response.data;
     };
 

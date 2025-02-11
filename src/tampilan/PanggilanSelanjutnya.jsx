@@ -10,7 +10,7 @@ import useSWR from "swr";
 const PanggilanSelanjutnya =()=>{
 
     const fetcher = async()=>{
-      const response = await axios.get("http://192.168.16.108:5000/api/antrianNull",);
+      const response = await axios.get("http://localhost:5000/api/antrianNull",);
       return response.data;
     };
   
