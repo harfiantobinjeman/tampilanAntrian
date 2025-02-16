@@ -48,7 +48,7 @@ const OperatorList = ()=>{
                 setOnPanggil(false)
 
             }
-            return ""
+           
         }
     },[JSON.stringify(data), fetchLagi])
    
