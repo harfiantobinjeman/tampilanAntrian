@@ -20,6 +20,7 @@
 .Karcis-container {
   width: 100%;
   display: flex;
+
   /* flex-direction: column; */
   flex-wrap: wrap;
   justify-content: center;
@@ -28,6 +29,8 @@
 }
 
 .Karcis-wrapper {
+  padding: 30px 20px;
+  cursor: pointer;
   width: 500px;
   background-color: antiquewhite;
   color: black;

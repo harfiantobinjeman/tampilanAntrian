@@ -14,15 +14,15 @@ const drawerWidth = 900;
 export default function Tampilan() {
   return (
     <>
-    <ResponsiveAppBar />
+    {/* <ResponsiveAppBar /> */}
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar
+      {/* <CssBaseline /> */}
+      {/* <AppBar
         position="fixed"
         sx={{ width: `calc(100% - ${drawerWidth}px)`, mr: `${drawerWidth}px` }}
       >
-      </AppBar>
-      <Box
+      </AppBar> */}
+      {/* <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: 'background.default', p: 2 }}
       >
@@ -37,7 +37,7 @@ export default function Tampilan() {
             <IsiDalam />
           </Box>
         </Typography>
-      </Box>
+      </Box> */}
       <RecipeReviewCard />
     </Box>
     </>
