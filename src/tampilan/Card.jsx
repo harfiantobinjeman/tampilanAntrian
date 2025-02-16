@@ -65,7 +65,7 @@ const RecipeReviewCard = ()=> {
                 <CardContent>
                   <Typography gutterBottom variant="h3" component="div">
                   <Divider/>
-                    <b style={{ color:"#fb8c00" }}>{panggilans.name + "("+panggilans.tipe_pasien_id+")")}</b>
+                    <b style={{ color:"#fb8c00" }}>{panggilans.name + "("+panggilans.tipe_pasien_id+")"}</b>
                   <Divider/>
                   </Typography>
                   <Typography variant="h2" sx={{ color: 'text.secondary' }}>
