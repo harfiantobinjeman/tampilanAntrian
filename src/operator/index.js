@@ -8,6 +8,13 @@ const OperatorList = ()=>{
     const [fetchLagi, setFetchLagi] = useState(false)
     const [onPanggil, setOnPanggil] = useState(false)
     useEffect(()=>{
+        socket2.onopen = () => {
+                console.log('WebSocket connection established');
+                setTimeout(()=>{
+    
+                    socket2.send(JSON.stringify({"type":"register","tipe_pasien_id":1}))
+                },1000)
+        };
         socket2.onclose = () => {
             console.log('WebSocket connection closed');
         };
