@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import useSWR from "swr";
+// import useSWR from "swr";
 
 const KarcisList = ()=>{
     const [data, setData] = useState([])
@@ -23,7 +23,7 @@ const KarcisList = ()=>{
         socket2.onmessage = (event) => {
             const data = JSON.parse(event.data);
             console.log('Real-time update:', data);
-            if(data.type=="selesai" || data.type=="panggil" || data.type=="insert-antrian"){
+            if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
                 setFetchLagi(!fetchLagi)
             }
         };
@@ -31,7 +31,7 @@ const KarcisList = ()=>{
                    
     }
 
-    const fetcher = async()=>{
+    // const fetcher = async()=>{
         
 
 
@@ -57,7 +57,7 @@ const KarcisList = ()=>{
         //     console.log('WebSocket connection closed');
         // };
 
-    };
+    // };
 
     useEffect(()=>{
         axios.get("https://antrian-online.onrender.com/antrian/v1/tipe_pasien/list").then((res)=>{

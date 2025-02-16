@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import useSWR from "swr";
+// import useSWR from "swr";
 const socket2 = new WebSocket('wss://antrian-online.onrender.com/antrian/v1/loket/user-id?loket_id=1&token=eyJhbGciOiJFUzI1NiIsInR5cCI6ImFjY2Vzc190b2tlbiJ9.eyJleHAiOjE3Mzk3NDcxMDEsImlzcyI6ImFudHJpYW5hY2Nlc3MiLCJzdWIiOiIxIiwia2V5IjoiYW50cmlhbmFjY2VzczoxOmFjY2Vzc190b2tlbiJ9.9kGDPGIQow0kv5rGoLLXQ2VGW0TP3t0Ji1wdkpISrQqBMAOKWPuj3qFul1i362BY_jdCH-EUQ0sj1W2buMoj5g');
 
 const OperatorList = ()=>{
@@ -14,7 +14,7 @@ const OperatorList = ()=>{
         socket2.onmessage = (event) => {
             const data = JSON.parse(event.data);
             console.log('Real-time update:', data);
-            if(data.type=="selesai" || data.type=="panggil"  || data.type=="insert-antrian"){
+            if(data.type==="selesai" || data.type==="panggil"  || data.type==="insert-antrian"){
                
                 setFetchLagi((y)=>!y)
             }
@@ -38,7 +38,7 @@ const OperatorList = ()=>{
         if(data.length){
             let lll = 0
             data?.map((aav,ak)=>{
-                if(aav.status=='call' && aav.loket_id==1){
+                if(aav.status==='call' && aav.loket_id===1){
                     lll++    
                     setOnPanggil(true) 
                 } 
@@ -48,6 +48,7 @@ const OperatorList = ()=>{
                 setOnPanggil(false)
 
             }
+            return ""
         }
     },[JSON.stringify(data), fetchLagi])
    
@@ -66,7 +67,7 @@ const OperatorList = ()=>{
                     <div className="Karcis-tittle">{antrians.number}</div>
                     <div className="Karcis-tittle">Sisa : {antrians.count}</div>
 
-                    <button disabled={antrians.loket_id==1 && onPanggil || antrians.loket_id!=1 && onPanggil } onClick={()=>{
+                    <button disabled={(antrians.loket_id===1 && onPanggil) || (antrians.loket_id!==1 && onPanggil) } onClick={()=>{
                         socket2.send(JSON.stringify({
                             "type":"call",
                             "body":{
@@ -76,7 +77,7 @@ const OperatorList = ()=>{
                             }
                         }))
                     }}>Panggil</button>
-                    <button disabled={ antrians.loket_id!=1 && onPanggil || !onPanggil }  onClick={()=>{
+                    <button disabled={ (antrians.loket_id!==1 && onPanggil) || !onPanggil }  onClick={()=>{
                         socket2.send(JSON.stringify({
                             "type":"selesai",
                             "body":{

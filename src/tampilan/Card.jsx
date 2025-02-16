@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import axios from 'axios';
-import useSWR from "swr";
+// import useSWR from "swr";
 
 import PanggilanSelanjutnya from './PanggilanSelanjutnya.jsx';
 
@@ -26,7 +26,7 @@ const RecipeReviewCard = ()=> {
           socket3.onmessage = (event) => {
               const data = JSON.parse(event.data);
               console.log('Real-time update:', data);
-              if(data.type=="selesai" || data.type=="panggil" || data.type=="insert-antrian"){
+              if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
                   setFetchLagi(!fetchLagi)
               }
           };
