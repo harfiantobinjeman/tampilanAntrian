@@ -14,6 +14,12 @@ const socket3 = new WebSocket('wss://antrian-online.onrender.com/antrian/v1/loke
 
 const RecipeReviewCard = ()=> {
   const [data, setData] = React.useState([])
+  const [token, setToken] = React.useState("")
+  React.useEffect(()=>{
+    setToken(localStorage.getItem("token"))
+  },[])
+  const [dataMaster, setDataMaster] = React.useState([])
+
    const [fetchLagi, setFetchLagi] = React.useState(false)
       
    
@@ -37,10 +43,19 @@ const RecipeReviewCard = ()=> {
       setData(res?.data?.data)
     });
   },[fetchLagi])
+
+  React.useEffect(()=>{
+    if(token){
+    axios.get("https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=10",{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+    //  console.log(res?.data?.data)
+      setDataMaster(res?.data?.data)
+    });
+  }
+  },[token])
    
 
-
-  if (!data) {
+console.log(data, dataMaster)
+  if (!dataMaster?.length) {
       return <h2>loading ..... ....... ......</h2>
   }
 
@@ -58,7 +73,7 @@ const RecipeReviewCard = ()=> {
         variant="permanent"
         anchor="right"
       >
-        {data?.map((panggilans, index)=>(
+        {dataMaster?.map((panggilans, index)=>(
           <>
             <Divider />
               <Card sx={{ maxWidth: 430,height:200, marginTop:2, marginLeft:4,border:"4px solid black", borderRadius:10,backgroundColor:"#90caf9" }}>
@@ -69,7 +84,7 @@ const RecipeReviewCard = ()=> {
                   <Divider/>
                   </Typography>
                   <Typography variant="h2" sx={{ color: 'text.secondary' }}>
-                    {"("+panggilans.tipe_pasien_name+") " + panggilans.number}
+                    {data?.length && data?.findIndex(aa=>aa.name==panggilans.name)!=-1?("("+data[data.findIndex(aa=>aa.name==panggilans.name)].tipe_pasien_name+") " + data[data.findIndex(aa=>aa.name==panggilans.name)].number):""}
                   </Typography>
                 </CardContent>
               </Card>
