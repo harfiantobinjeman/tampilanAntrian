@@ -17,7 +17,9 @@ const OperatorList = ()=>{
             // },1000) 
 
             setLoketId(parseInt(localStorage.getItem("loket_id")))
-        }else{
+        }
+        
+        if(!localStorage.getItem("token")){
           
                
             window.location = "https://antrian-online.netlify.app/login";
@@ -91,7 +93,7 @@ const OperatorList = ()=>{
     return(
     <>
         <header className="App-header">
-            <button onClick={()=>{localStorage.removeItem("token")}}>Logout</button>
+            <button onClick={()=>{localStorage.removeItem("token"); window.location = "https://antrian-online.netlify.app/login";}}>Logout</button>
           
             <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>Pilih Panggil Loket {loketId}</h4>
             <div className="Karcis-container">
