@@ -47,7 +47,7 @@ const Login = () => {
   const [loading, setLoading] = React.useState(false)
   React.useEffect(()=>{
     if(localStorage.getItem("token")){
-      window.location = "https://antrian-online.netlify.app";
+      window.location = "https://antrian-online.netlify.app/operator";
     }
   },[])
   const handleLogin = ()=>{
@@ -62,7 +62,7 @@ const Login = () => {
         localStorage.setItem("token", res?.data?.data)
         toast.success("Berhasil Login")
         setTimeout(()=>{
-          window.location = "https://antrian-online.netlify.app";
+          window.location = "https://antrian-online.netlify.app/operator";
 
         },200)
       }else{

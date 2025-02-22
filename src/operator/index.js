@@ -17,6 +17,12 @@ const OperatorList = ()=>{
             // },1000) 
 
             setLoketId(parseInt(localStorage.getItem("loket_id")))
+        }else{
+          
+               
+            window.location = "https://antrian-online.netlify.app/login";
+                
+            
         }
 
     },[])
