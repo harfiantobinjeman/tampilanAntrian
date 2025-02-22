@@ -91,7 +91,7 @@ const OperatorList = ()=>{
     return(
     <>
         <header className="App-header">
-            
+            <button onClick={()=>{localStorage.removeItem("token")}}>Logout</button>
           
             <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>Pilih Panggil Loket {loketId}</h4>
             <div className="Karcis-container">
