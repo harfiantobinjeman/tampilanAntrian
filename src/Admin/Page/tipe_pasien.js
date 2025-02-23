@@ -21,11 +21,11 @@ const TipePasienPage = ()=>{
     useEffect(()=>{
         if(token){
 
-            axios.get('http://localhost:8000/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setData(res?.data?.data)
             })
 
-            axios.get('http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setDataUser(res?.data?.data)
             }).catch(err=>{
                 console.log(err)
@@ -35,7 +35,7 @@ const TipePasienPage = ()=>{
     const handleDeactivate = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
 
-        axios.post('http://localhost:8000/antrian/v1/admin/tipe_pasien/deactivate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/deactivate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             console.log(err)
@@ -46,7 +46,7 @@ const TipePasienPage = ()=>{
     }
     const handleActivate = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
-        axios.post('http://localhost:8000/antrian/v1/admin/tipe_pasien/activate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/activate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             console.log(err)
@@ -58,7 +58,7 @@ const TipePasienPage = ()=>{
 
     const handleSave = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
-        axios.put('http://localhost:8000/antrian/v1/admin/tipe_pasien',{id:id,name:dataEditVal[id]},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.put('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien',{id:id,name:dataEditVal[id]},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             console.log(err)
