@@ -39,7 +39,7 @@ const Admin = ()=>{
                     </div>
                 </div>
                 <div className='body-menu' style={{paddingBottom:'30px',height:'100%', width:'calc(100% - 200px)', display:'block',overflowY:'auto',overflowX:'hidden'}}>
-                    <div style={{fontSize:'25px',fontWeight:'700',paddingLeft:'35px',height:'90px', width:'100%', display:'flex', justifyContent:'start', alignItems:'center'}}>
+                    <div style={{fontSize:'25px',fontWeight:'700',paddingLeft:'35px',height:'100px', width:'100%', display:'flex', justifyContent:'start', alignItems:'center'}}>
                         {query.get("page")?.replaceAll("_"," ").toLocaleUpperCase()}
                     </div>
                     {query.get("page")=="loket"?<LoketPage></LoketPage>:""}
