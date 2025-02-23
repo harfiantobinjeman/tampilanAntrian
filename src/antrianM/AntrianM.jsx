@@ -1,16 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
+import { ScaleLoader } from 'react-spinners';
 // import useSWR from "swr";
 
 const KarcisList = ()=>{
     const [data, setData] = useState([])
+    const [loading, setLoading] = useState(false)
+
   
     const [fetchLagi, setFetchLagi] = useState(false)
 
     const componentRef = useRef(null);
 
     const handleAfterPrint = React.useCallback(() => {
+        setLoading(false)
         
           componentRef.current.innerHTML =""
       console.log("`onAfterPrint` called");
@@ -41,6 +45,7 @@ const KarcisList = ()=>{
             setTimeout(()=>{
 
                 socket2.send(JSON.stringify({"type":"insert-antrian","body":{"tipe_pasien_id":id}}))
+                setLoading(true)
             },300)
 
         }
@@ -116,7 +121,9 @@ const KarcisList = ()=>{
     return(
     <>
         <header className="App-header">
-         
+            {loading?<div style={{position:'fixed', left:0, right:0,top:0, bottom:0, zIndex:10, background:'rgba(0,0,0,0.4)', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <ScaleLoader height={100} width={40} size color='white'></ScaleLoader>
+            </div>:""}
                     <div style={{minHeight:'100vh', display:'flex', justifyContent:'center', alignContent:'center', flexDirection:'column'}}>
                     <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>SILAHKAN AMBIL NO ANTRIAN DISINI</h4>
                     <div className="Karcis-container" >
