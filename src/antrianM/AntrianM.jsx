@@ -116,23 +116,26 @@ const KarcisList = ()=>{
     return(
     <>
         <header className="App-header">
+         
+                    <div style={{minHeight:'100vh', display:'flex', justifyContent:'center', alignContent:'center', flexDirection:'column'}}>
+                    <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>SILAHKAN AMBIL NO ANTRIAN DISINI</h4>
+                    <div className="Karcis-container" >
+                        {data?.map((antrians, index)=>(
+                        <div onClick={()=>{fetcher2(antrians.id)}} className="Karcis-wrapper" key={antrians.id}>
+                            <div className="Karcis-tittle">{antrians.name}</div>
+                        
+                            
+
+                        </div>
+
+                        ))}
+                        
+                    </div>
+                    </div>
+                    <div ref={componentRef} style={{marginTop:'0px',display:'flex',flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                        
+                    </div>
             
-        <div ref={componentRef} style={{display:'flex',flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-       
-        </div>
-            <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>SILAHKAN AMBIL NO ANTRIAN DISINI</h4>
-            <div className="Karcis-container">
-                {data?.map((antrians, index)=>(
-                <div onClick={()=>{fetcher2(antrians.id)}} className="Karcis-wrapper" key={antrians.id}>
-                    <div className="Karcis-tittle">{antrians.name}</div>
-                   
-                    
-
-                </div>
-
-                ))}
-                
-            </div>
         </header>
     </>
     )
