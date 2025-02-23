@@ -29,6 +29,7 @@ const LoketPage = ()=>{
                 setDataUser(res?.data?.data)
             }).catch(err=>{
                 console.log(err)
+                
             })
         }
     },[token,refresh])

@@ -18,6 +18,12 @@ const Admin = ()=>{
     const handleClickMenu = (menu)=>{
         window.location = `https://antrian-online.netlify.app/admin?page=${menu}`
     }
+    useEffect(()=>{
+            if(!localStorage.getItem("token")){
+                window.location = `https://antrian-online.netlify.app/login`
+
+            }
+        },[])
         
     const query = new URLSearchParams(window.location.search);
     console.log(query.get("page"))
