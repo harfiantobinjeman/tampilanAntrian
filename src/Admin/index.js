@@ -44,13 +44,14 @@ const Admin = ()=>{
 
                     </div>
                 </div>
-                <div className='body-menu' style={{paddingBottom:'30px',height:'100%', width:'calc(100% - 200px)', display:'block',overflowY:'auto',overflowX:'hidden'}}>
-                    <div style={{position:'sticky',top:0,zIndex:2,fontSize:'25px',fontWeight:'700',paddingLeft:'35px',height:'100px', width:'100%', display:'flex', justifyContent:'start', alignItems:'center'}}>
-                        {query.get("page")?.replaceAll("_"," ").toLocaleUpperCase()}
+                <div className='body-menu' style={{height:'100%', width:'calc(100% - 200px)', display:'block',overflowY:'hidden',overflowX:'hidden'}}>
+                    <div style={{  boxShadow:" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px",position:'sticky',top:0,zIndex:2,fontSize:'25px',fontWeight:'700',paddingLeft:'35px',height:'80px', width:'100%', display:'flex', justifyContent:'start', alignItems:'center'}}>
+                        <div style={{marginTop:''}}>{query.get("page")?.replaceAll("_"," ").toLocaleUpperCase()}</div>
                     </div>
-                    {query.get("page")=="loket"?<LoketPage></LoketPage>:""}
-                    {query.get("page")=="tipe_pasien"?<TipePasienPage></TipePasienPage>:""}
-
+                    <div style={{paddingTop:"10px",marginBottom:'',height:'calc(100% - 100px)', width:'calc(100%)', display:'block',overflowY:'auto',overflowX:'hidden'}}>
+                        {query.get("page")=="loket"?<LoketPage></LoketPage>:""}
+                        {query.get("page")=="tipe_pasien"?<TipePasienPage></TipePasienPage>:""}
+                    </div>
                 </div>
             </div>
         </div>
