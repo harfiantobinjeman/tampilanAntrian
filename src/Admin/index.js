@@ -29,7 +29,7 @@ const Admin = ()=>{
     console.log(query.get("page"))
     console.log(query)
     return(
-        <div style={{backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat',background:"url('./bg.gif')",padding:"10px", width:'100vw', height:'100vh',color:'white',}}>
+        <div style={{backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat',backgroundImage:"url('./bg.gif')",padding:"10px", width:'100vw', height:'100vh',color:'white',}}>
             <div className='body-admin' style={{height:'calc(100vh - 20px)', width:'calc(100vw - 20px)',overflowY:'hidden',overflowX:'hidden'}}>
                 <div style={{ height:'100%', width:'200px'}}>
                     <div style={{height:'80px', display:'flex', alignItems:'center', justifyContent:'center',gap:'10px', boxShadow:" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"}}>
