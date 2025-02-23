@@ -20,6 +20,8 @@ const Admin = ()=>{
     }
         
     const query = new URLSearchParams(window.location.search);
+    console.log(query.get("page"))
+    console.log(query)
     return(
         <div style={{backgroundSize:'cover',background:"url('./bg.gif')",padding:"10px", width:'100vw', height:'100vh',color:'white',}}>
             <div className='body-admin' style={{height:'calc(100vh - 20px)', width:'calc(100vw - 20px)',overflowY:'hidden',overflowX:'hidden'}}>
