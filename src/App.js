@@ -4,6 +4,7 @@ import AntrianM from '../src/antrianM/AntrianM';
 import Tampilan from '../src/tampilan/Api';
 import OperatorList from '../src/operator';
 import Login from '../src/login/Login';
+import Admin from './Admin';
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/tampilan" element={<Tampilan/>} />
         <Route path="/operator" element={<OperatorList/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/admin" element={<Admin/>} />
+
         </Routes>
       </BrowserRouter>
     </div>

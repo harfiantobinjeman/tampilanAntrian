@@ -1,0 +1,30 @@
+
+
+  
+ 
+  
+  .nft{
+    user-select:none;
+    width: 27%;
+    cursor: pointer;
+    
+    border: 1px solid #ffffff22;
+    
+    box-shadow:0 15px 35px rgba(0,0,0,0.5);
+    border-radius:10px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    border-radius: .7rem;
+    overflow: hidden;
+    transition: .5s all;
+   
+
+   
+    &:hover{
+      
+      transform: scale(1.015);
+    
+    }
+  }
+  
+  
