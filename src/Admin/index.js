@@ -34,18 +34,16 @@ const Admin = ()=>{
     // console.log(query.get("page"))
     // console.log(query)
     return(
-        <div style={{backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat',backgroundImage:"url('./bg.jfif')",padding:"20px", width:'100vw', height:'100vh',color:'black',}}>
-            <div className='body-admin' style={{height:'calc(100vh - 40px)', width:'calc(100vw - 40px)',overflowY:'hidden',overflowX:'hidden'}}>
-                
-                    <div  style={{ height:'100%', width:'200px',backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat', }}>
-                        <div className='menu-body'>
-                            <div  onClick={()=>{handleClickMenu("")}} style={{borderBottomRightRadius:query.get("page")=="user"?'20px':"0px",boxShadow: "rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px !important",cursor:'pointer',background:'rgba(0,0,0,0.8)',color:'white',height:'80px', display:'flex', alignItems:'center', justifyContent:'center',gap:'10px', border:'1px solid blue'}}>
-                                <Dashboard style={{}} color='black'></Dashboard>
-                                <h3>SUPERADMIN</h3>
-                            </div>
-                            <div style={{height:"calc(100% - 80px)", padding:'0px 0px',background:!query.get("page")?'rgb(232, 235, 237)':""}}>
-                                <div onClick={()=>{handleClickMenu("user")}} className={` ${!query.get("page")?'menu-items-dashboard':query.get("page")=="user"?"active":"menu-items"} ${query.get("page")=="loket"?"menu-items-atas":""}` } style={{paddingLeft:'20px',paddingRight:'20px',display:'flex', alignItems:'center', gap:'30px',paddingTop:'15px', paddingBottom:'15px', fontWeight:'600'}}><FaUser style={{width:'30px'}}></FaUser>USER</div>
-                                <div onClick={()=>{handleClickMenu("loket")}} className={` ${!query.get("page")?'menu-items-dashboard':query.get("page")=="loket"?"active":"menu-items"}  ${query.get("page")=="tipe_pasien"?"menu-items-atas":query.get("page")=="user"?"menu-items-bawah":""}`} style={{paddingLeft:'20px',paddingRight:'20px',display:'flex', alignItems:'center', gap:'30px',paddingTop:'15px', paddingBottom:'15px', fontWeight:'600'}}><img style={{width:'30px'}} src={Loket}></img>LOKET</div>
+        <div style={{backgroundSize:'cover',background:"url('./bg.gif')",padding:"10px", width:'100vw', height:'100vh',color:'white',}}>
+            <div className='body-admin' style={{height:'calc(100vh - 20px)', width:'calc(100vw - 20px)',overflowY:'hidden',overflowX:'hidden'}}>
+                <div style={{ height:'100%', width:'200px'}}>
+                    <div style={{height:'80px', display:'flex', alignItems:'center', justifyContent:'center',gap:'10px', boxShadow:" rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"}}>
+                        <Dashboard style={{}} color='white'></Dashboard>
+                        <h3>SUPERADMIN</h3>
+                    </div>
+                    <div style={{height:"calc(100% - 80px)", padding:'0px 0px',}}>
+                        <div onClick={()=>{handleClickMenu("user")}} className={`menu-items ${query.get("page")=="user"?"active":""}`} style={{paddingLeft:'20px',paddingRight:'20px',display:'flex', alignItems:'center', gap:'30px',paddingTop:'15px', paddingBottom:'15px', fontWeight:'600'}}><FaUser style={{width:'30px'}}></FaUser>USER</div>
+                        <div onClick={()=>{handleClickMenu("loket")}} className={`menu-items ${query.get("page")=="loket"?"active":""}`} style={{paddingLeft:'20px',paddingRight:'20px',display:'flex', alignItems:'center', gap:'30px',paddingTop:'15px', paddingBottom:'15px', fontWeight:'600'}}><img style={{width:'30px'}} src={Loket}></img>LOKET</div>
 
                                 <div onClick={()=>{handleClickMenu("tipe_pasien")}} className={` ${!query.get("page")?'menu-items-dashboard':query.get("page")=="tipe_pasien"?"active":"menu-items"} ${query.get("page")=="loket"?"menu-items-bawah":""}`} style={{paddingLeft:'20px',paddingRight:'20px',display:'flex', alignItems:'center', gap:'30px',paddingTop:'15px', paddingBottom:'15px', fontWeight:'600'}}><img style={{width:'30px'}} src={Patien}></img>TIPE PASIEN</div>
   
