@@ -1,13 +1,14 @@
 import React,{useState,useEffect} from "react";
 import axios from 'axios';
-import { MdCancel, MdDelete, MdEdit, MdSave, MdSaveAlt, MdSaveAs } from 'react-icons/md';
+import { MdCancel, MdClose, MdDelete, MdEdit, MdSave, MdSaveAlt, MdSaveAs } from 'react-icons/md';
+import { toast } from "react-toastify";
 
-const TipePasienPage = ()=>{
+const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
     const [data,setData] = useState([])
     const [dataLoding,setDataLoading] = useState([])
     const [dataEdit,setDataEdit] = useState([])
     const [dataEditVal,setDataEditVal] = useState([])
-
+ const [nameTipePasien, setNameTipePasien] = useState("")
 
 
     const [refresh,setRefresh] = useState(false)
@@ -21,14 +22,24 @@ const TipePasienPage = ()=>{
     useEffect(()=>{
         if(token){
 
-            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setData(res?.data?.data)
+            }).catch(err=>{
+                if(err?.status==401){
+                    window.location="/login"
+                    localStorage.removeItem("token")
+                }
+                toast.error(err?.response?.data?.message)
             })
 
-            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=10',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setDataUser(res?.data?.data)
             }).catch(err=>{
-                console.log(err)
+                if(err?.status==401){
+                    window.location="/login"
+                    localStorage.removeItem("token")
+                }
+                toast.error(err?.response?.data?.message)
             })
         }
     },[token,refresh])
@@ -38,18 +49,41 @@ const TipePasienPage = ()=>{
         axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/deactivate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
-            console.log(err)
+            if(err?.status==401){
+                window.location="/login"
+                localStorage.removeItem("token")
+            }
+            toast.error(err?.response?.data?.message)
         }).finally(()=>{
             setDataLoading(aa=>({...aa,[id]:false}))
     
             })
+    }
+    const handleSaveTipePasien = ()=>{
+        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien',{name:nameTipePasien},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            // setData(res?.data?.data)
+            setNameTipePasien("")
+            setRefresh(aa=>!aa)
+            setModalAddOpen(false)
+        }).catch(err=>{
+            if(err?.status==401){
+                window.location="/login"
+                localStorage.removeItem("token")
+            }
+            toast.error(err?.response?.data?.message)
+            
+        })
     }
     const handleActivate = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
         axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/activate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
-            console.log(err)
+            if(err?.status==401){
+                window.location="/login"
+                localStorage.removeItem("token")
+            }
+            toast.error(err?.response?.data?.message)
         }).finally(()=>{
         setDataLoading(aa=>({...aa,[id]:false}))
 
@@ -61,7 +95,11 @@ const TipePasienPage = ()=>{
         axios.put('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien',{id:id,name:dataEditVal[id]},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
-            console.log(err)
+            if(err?.status==401){
+                window.location="/login"
+                localStorage.removeItem("token")
+            }
+            toast.error(err?.response?.data?.message)
         }).finally(()=>{
             setDataLoading(aa=>({...aa,[id]:false}))
             setDataEdit([])
@@ -72,17 +110,44 @@ const TipePasienPage = ()=>{
 
     return(
         <div style={{display:'flex',flexWrap:"wrap", justifyContent:'left',alignItems:'center',paddingLeft:'30px',gap:'20px'}}>
+<div style={{transition:'0.3s ease',zIndex:modalAddOpen?60:-1,display:'flex', justifyContent:'center', alignItems:'center',position:'fixed', left:0, right:0, top:0, bottom:0,background:'rgba(232, 235, 237,0.8)',}}>
+
+                                <div style={{position:'relative',marginTop:modalAddOpen?'0px':'-1000px',transition:'0.3s ease',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",background:'rgb(232, 235, 237)',borderRadius:'20px',width:'300px', height:'180px',}} >
+                                    <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',paddingLeft:'20px', paddingRight:'10px',paddingTop:'0px'}}>
+                                        <h3 style={{fontSize:''}}>ADD TIPE PASIEN</h3>
+                                        <div className="buttonAdd" onClick={()=>{setModalAddOpen(false);setNameTipePasien("")}} style={{cursor:'pointer',display:'flex', borderRadius:'50%', justifyContent:'center',background:"rgb(232, 235, 237)" ,alignItems:'center', padding:'10px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)"}}>
+                                            {/* <div style={{display:'flex', justifyContent:'center',alignItems:'center',width:'30px',height:'30px',fontSize:'30px', fontWeight:'800',textShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)"}}>X</div> */}
+                                            <MdClose style={{fontSize:'20px',fontWeight:'600', color:"#131313", textShadow:""}}></MdClose>
+                                        </div>
+                                    </div>
+                                    <div style={{display:'flex', justifyContent:'center'}}>
+                                    <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:"250px", height:'50px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",borderRadius:"40px"}}>
+
+                                        <input value={nameTipePasien} onChange={(e)=>{setNameTipePasien(e.target.value)}} className="inputLoket" style={{fontWeight:600,textShadow: "4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",fontSize:'17px',border:'none', background:'none'}} placeholder="Nama Tipe Pasien"></input>
+                                        
+
+                                    </div>
+                                    </div>
+                                    <div onClick={()=>{handleSaveTipePasien()}} className="buttonAdd" style={{cursor:'pointer',bottom:10,right:10,position:'absolute',display:'flex', justifyContent:'end', paddingRight:''}}>
+                                        <div style={{padding:'10px', display:'flex', justifyContent:'center', alignItems:'center',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",textShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)", background:'#e8ebed',borderRadius:'5px', color:'#131313',fontWeight:800}}>SAVE</div>
+                                    </div>
+                                </div>
+                        </div>
 
 
                        {data?.map((aa,val)=>{
 
                         return(
                         <div className='nft' style={{padding:"20px 20px"}}>
-                            <div  style={{fontSize:'20px', fontWeight:'600',marginTop:'0px',marginBottom:"18px", display:'flex', gap:'10px',alignItems:'center', justifyContent:'center'}}>
-                                {!dataEdit[aa.id]?aa.name:<input value={dataEditVal[aa.id]} onChange={(e)=>{ setDataEditVal(cc=>({[aa.id]:e.target.value}))}} />}
+                            <div  style={{textShadow: "4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",fontSize:'20px', fontWeight:'600',marginTop:'0px',marginBottom:"18px", display:'flex', gap:'10px',alignItems:'center', justifyContent:'center'}}>
+                            {!dataEdit[aa.id]?aa.name:
+                                <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:"200px", height:'35px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",borderRadius:"40px"}}>
 
+<input value={dataEditVal[aa.id]} onChange={(e)=>{ setDataEditVal(cc=>({[aa.id]:e.target.value}))}} className="inputLoket" style={{fontWeight:600,textShadow: "4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",fontSize:'13px',border:'none', background:'none'}} placeholder="Nama Loket"></input>
+                                
 
-                                {!dataEdit[aa.id]?<MdEdit onClick={()=>{setDataEdit(bb=>({[aa.id]:true}) ); setDataEditVal(cc=>({...cc,[aa.id]:aa.name}))}}  className='hover-button' style={{color:'white',cursor:'pointer'}}></MdEdit>:<div><MdCancel onClick={()=>{setDataEdit(bb=>({...bb,[aa.id]:false}) ); setDataEditVal(cc=>({...cc,[aa.id]:""}))}} style={{color:'red',cursor:'pointer'}} ></MdCancel><MdSaveAs onClick={()=>handleSave(aa.id)}></MdSaveAs></div>}
+                            </div>}
+                                {!dataEdit[aa.id]?<MdEdit onClick={()=>{setDataEdit(bb=>({[aa.id]:true}) ); setDataEditVal(cc=>({...cc,[aa.id]:aa.name}))}}  className='hover-button' style={{color:'#131313',cursor:'pointer'}}></MdEdit>:<div><MdCancel onClick={()=>{setDataEdit(bb=>({...bb,[aa.id]:false}) ); setDataEditVal(cc=>({...cc,[aa.id]:""}))}} style={{color:'red',cursor:'pointer'}} ></MdCancel><MdSaveAs onClick={()=>handleSave(aa.id)}></MdSaveAs></div>}
 
                             </div>
                             <div style={{display:'flex', justifyContent:'space-evenly', gap:'5px'}}>

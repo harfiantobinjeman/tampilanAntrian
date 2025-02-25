@@ -7,18 +7,19 @@
     user-select:none;
     width: 27%;
     cursor: pointer;
+    border: 1px solid  white;
     
-    border: 1px solid #ffffff22;
-    
-    box-shadow:0 15px 35px rgba(0,0,0,0.5);
+    background: rgba($color: white, $alpha: 0.3);
+
+    font-family: SplineSans-Regular;
+    color: #131313;
     border-radius:10px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter:blur(10px);
+    
     border-radius: .7rem;
     overflow: hidden;
     transition: .5s all;
-   
-
+    // box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+box-shadow:4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255);
    
     &:hover{
       

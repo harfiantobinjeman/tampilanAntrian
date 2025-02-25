@@ -47,7 +47,7 @@ const Login = () => {
   const [loading, setLoading] = React.useState(false)
   React.useEffect(()=>{
     if(localStorage.getItem("token")){
-      window.location = "https://antrian-online.netlify.app/operator";
+      window.location = "/operator";
     }
   },[])
   const handleLogin = ()=>{
@@ -62,9 +62,9 @@ const Login = () => {
         localStorage.setItem("token", res?.data?.data)
         toast.success("Berhasil Login")
         setTimeout(()=>{
-          window.location = "https://antrian-online.netlify.app/admin";
+          window.location = "/admin";
 
-        },200)
+        },100)
       }else{
         toast.error("Gagal Login, periksa username/password anda")
 
