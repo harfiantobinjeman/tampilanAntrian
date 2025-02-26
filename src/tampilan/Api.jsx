@@ -8,19 +8,20 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Panggil from './Card';
 import Button from '@mui/material/Button';
 import manual from './manual.json'
+import { SkipNext } from '@mui/icons-material';
 
 const cards = [
   {
     antrian: 'ANTRIAN',
-    title: 'LOKET',
-    noAntrian: '2',
+    title: 'LOKET 1',
+    noAntrian: '6',
   },{
     antrian: 'ANTRIAN',
-    title: 'LOKET',
+    title: 'LOKET 2',
     noAntrian: '9',
   },{
     antrian: 'ANTRIAN',
-    title: 'LOKET',
+    title: 'LOKET 3',
     noAntrian: '7',
   }
 ];
@@ -33,7 +34,18 @@ export default function Tampilan() {
     let noAntrian = new Audio(`/sound/${a}.wav`);
     let description = new Audio(`/sound/${b}.wav`);
     let title = new Audio(`/sound/${c}.wav`);
-    noAntrian.play(); description.play(); title.play()
+    let bunyi = new Audio(`/sound/in.wav`);
+    //noAntrian.play(SkipNext), description.play(); title.play()
+    bunyi.play()
+    bunyi.addEventListener('ended',function(){
+        noAntrian.play();
+        noAntrian.addEventListener('ended',function(){
+        description.play();
+        description.addEventListener('ended',function(){
+          title.play();
+        })
+    })
+    })
   }
 
   return (
@@ -95,12 +107,12 @@ export default function Tampilan() {
                   bgcolor:'#F8C794'}}>
                   {card.noAntrian}
                 </Typography>
-                <CardMedia
+                {/* <CardMedia
                   component="audio"
                   image ={`/sound/${card.title}.wav`}
                   id='panggil'
                   autoPlay>
-                </CardMedia>
+                </CardMedia> */}
               </CardContent>
             </CardActionArea>
             
@@ -114,13 +126,13 @@ export default function Tampilan() {
           fontWeight:'bold',
           position: 'fixed',
           width: '100%',
-          bottom: '10px',
+          bottom: '3px',
           color:'white',
           borderBottom:"4px solid pink" }}>
             { manuals.textBerjalan }
           </marquee>
           ))}
-      <Button variant="contained" style={{ position: 'fixed',bottom: '5px' }} color="error">Info   : </Button>
+      <Button variant="contained" style={{ position: 'fixed',bottom: '0px' }} color="error">Info   : </Button>
     </div>
   );
 }
