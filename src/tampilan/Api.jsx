@@ -8,21 +8,20 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Panggil from './Card';
 import Button from '@mui/material/Button';
 import manual from './manual.json'
-import { SkipNext } from '@mui/icons-material';
 
 const cards = [
   {
     antrian: 'ANTRIAN',
     title: 'LOKET 1',
-    noAntrian: '6',
+    noAntrian: 'A-6',
   },{
     antrian: 'ANTRIAN',
     title: 'LOKET 2',
-    noAntrian: '9',
+    noAntrian: 'A-9',
   },{
     antrian: 'ANTRIAN',
     title: 'LOKET 3',
-    noAntrian: '7',
+    noAntrian: 'A-7',
   }
 ];
 
@@ -31,20 +30,37 @@ const cards = [
 export default function Tampilan() {
 
   const start = (a,b,c) => {
+
+    let strNoAntri = b.split("")
+    console.log(strNoAntri[0])
+    console.log(strNoAntri[2])
+
+    let angLoket = c.match(/(\d+)/);
+    console.log(angLoket[0]);
+    
     let noAntrian = new Audio(`/sound/${a}.wav`);
-    let description = new Audio(`/sound/${b}.wav`);
+    let abjdAntrian = new Audio(`/sound/${strNoAntri[0]}.wav`);
+    let description = new Audio(`/sound/${strNoAntri[2]}.wav`);
     let title = new Audio(`/sound/${c}.wav`);
     let bunyi = new Audio(`/sound/in.wav`);
+    let loket = new Audio(`/sound/loket.wav`);
+    let nomorLoket = new Audio(`/sound/${angLoket[0]}.wav`)
     //noAntrian.play(SkipNext), description.play(); title.play()
     bunyi.play()
     bunyi.addEventListener('ended',function(){
         noAntrian.play();
         noAntrian.addEventListener('ended',function(){
-        description.play();
-        description.addEventListener('ended',function(){
-          title.play();
-        })
-    })
+          abjdAntrian.play();
+          abjdAntrian.addEventListener('ended',function(){
+            description.play();
+            description.addEventListener('ended',function(){
+              loket.play();
+              loket.addEventListener('ended',function(){
+                  nomorLoket.play();
+                })
+              })
+            })
+          })
     })
   }
 

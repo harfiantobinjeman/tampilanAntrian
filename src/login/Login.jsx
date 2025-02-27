@@ -79,27 +79,54 @@ const Login = () => {
   return (
     <div>
         <header >
-            <div style={{backgroundImage:"url('./new106.png')" ,display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', width:'100vw'}}>
-                <Card sx={{ maxWidth: 345, p : 6 }} style={{borderBottom:'2px solid rgba(31, 76, 248, 0.4)',borderLeft:'2px solid rgba(31, 76, 248, 1)',borderRight:"2px solid rgba(250, 27, 194,0.3)",borderTop:"2px solid rgba(250, 27, 194,0.2)",backdropFilter:"blur(0px)",boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",background: 'rgba(31, 76, 248, 0.23)'}}>
-                    <h3 style={{color:'rgb(145, 244, 255)'}}>WELCOME BACK</h3>
+            <div style={{backgroundImage:"url('./new106.png')" ,
+              display:'flex', 
+              justifyContent:'center', 
+              alignItems:'center', 
+              height:'100vh', 
+              width:'100vw'}}>
+                <Card
+                sx={{ maxWidth: 345, p : 6
+                 }} 
+                style={{borderBottom:'2px solid rgba(31, 76, 248, 0.4)',
+                borderLeft:'2px solid rgba(31, 76, 248, 1)',
+                borderRight:"2px solid rgba(250, 27, 194,0.3)",
+                borderTop:"2px solid rgba(250, 27, 194,0.2)",
+                backdropFilter:"blur(0px)",
+                boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",
+                background: 'rgba(31, 76, 248, 0.23)'}}>
+                    <h3 style={{color:'rgb(145, 244, 255)'}} >WELCOME BACK</h3>
                     <CardContent>
-                      <TextField onChange={(e)=>{setUsername(e.target.value)}} value={username}  sx={{ color:'red',fieldset: {border:"2px solid rgba(31, 76, 248, 1)"}, input: { color: 'rgb(145, 244, 255)'} }} id="outlined-basic" label="Name" variant="outlined" />
+                      <TextField
+                        className='glow-on-hover'
+                        onChange={(e)=>{setUsername(e.target.value)}} 
+                        value={username}  
+                        sx={{ color:'red',
+                        fieldset: {border:"2px solid rgba(31, 76, 248, 1)"}, 
+                        input: { color: 'rgb(145, 244, 255)'} }} 
+                        id="outlined-basic" 
+                        label="Name" 
+                        variant="outlined" />
                     </CardContent>
-
-
-
                     <CardContent>
                     <TextField
-                   onChange={(e)=>{setPassword(e.target.value)}} value={password}
+                      className='glow-on-hover'
+                      onChange={(e)=>{setPassword(e.target.value)}} value={password}
                       id="outlined-password-input"
                       label="Password"
                       type="password"
                       autoComplete="current-password"
-                      sx={{ color:'red',fieldset: { border:"2px solid rgba(31, 76, 248, 1)"}, input: { color: 'rgb(145, 244, 255)'} }}
+                      sx={{ 
+                        color:'red',
+                        fieldset: { border:"2px solid rgba(31, 76, 248, 1)"}, 
+                        input: { color: 'rgb(145, 244, 255)'}
+                      }}
                     />
                     </CardContent>
-                
-                   <div  style={{ display:'flex', marginTop:'15px',justifyContent:'center'}}>
+                   <div  style={{ 
+                    display:'flex', 
+                    marginTop:'15px',
+                    justifyContent:'center'}}>
                       <div onClick={()=>{
                         loading?console.log("a"):handleLogin()
                       }}
@@ -122,9 +149,16 @@ const Login = () => {
                         
                       >
                         
-                        {loading?<SyncLoader  color='rgb(145, 244, 255)' size={20}/>:<Typography  style={{fontWeight:'700',fontSize:'17px'}}  variant="p" component="div" sx={{ p:'2px' }}> 
+                        {loading?
+                        <SyncLoader  color='rgb(145, 244, 255)' size={20}/>
+                          :
+                        <Typography  
+                          style={{fontWeight:'700',fontSize:'17px'}}  
+                          variant="p" 
+                          component="div" 
+                          sx={{ p:'2px' }}> 
                               LOGIN
-                           </Typography>}
+                        </Typography>}
                       </div>
                       </div>
                           
