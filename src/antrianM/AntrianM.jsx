@@ -130,9 +130,10 @@ const KarcisList = ()=>{
                         justifyContent:'center', 
                         alignContent:'center', 
                         flexDirection:'column'}}>
-                    <h4 style={{ 
+                    <h1 className='ambil' style={{ 
                         marginTop:"0px",
-                        marginBottom:"40px" }}>SILAHKAN AMBIL NO ANTRIAN DISINI</h4>
+                        marginBottom:"40px"
+                        }}><b>SILAHKAN AMBIL NO ANTRIAN DISINI</b></h1>
                     <div className="Karcis-container" >
                         {data?.map((antrians, index)=>(
                         <div

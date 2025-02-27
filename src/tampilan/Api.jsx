@@ -13,7 +13,7 @@ const cards = [
   {
     antrian: 'ANTRIAN',
     title: 'LOKET 1',
-    noAntrian: 'A-6',
+    noAntrian: 'A-7',
   },{
     antrian: 'ANTRIAN',
     title: 'LOKET 2',
@@ -38,7 +38,7 @@ export default function Tampilan() {
     let angLoket = c.match(/(\d+)/);
     console.log(angLoket[0]);
     
-    let noAntrian = new Audio(`/sound/${a}.wav`);
+    let noAntrian = new Audio(`/sound/antrian.wav`);
     let abjdAntrian = new Audio(`/sound/${strNoAntri[0]}.wav`);
     let description = new Audio(`/sound/${strNoAntri[2]}.wav`);
     let title = new Audio(`/sound/${c}.wav`);
@@ -86,7 +86,7 @@ export default function Tampilan() {
           <Card sx={{
             width:'90%',
             margin:'10px',
-            height:'200px',
+            height:'190px',
             border:"4px solid #AD88C6"}}>
             <CardActionArea
               onClick={() => 
@@ -115,12 +115,12 @@ export default function Tampilan() {
                 </Typography>
                 <Typography variant="body2" color="text.secondary"sx={{
                   fontSize:'20px',
-                  bgcolor:'#F8C794' }}>
-                  {card.antrian}
+                  bgcolor:'#F8C794',
+                  borderBottom:"4px solid black"}}>
+                  ANTRIAN
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{
-                  fontSize:'80px',
-                  bgcolor:'#F8C794'}}>
+                <Typography className='Monitor-wrapper' sx={{
+                  fontSize:'80px', color:'black'}}>
                   {card.noAntrian}
                 </Typography>
                 {/* <CardMedia
@@ -142,9 +142,9 @@ export default function Tampilan() {
           fontWeight:'bold',
           position: 'fixed',
           width: '100%',
-          bottom: '3px',
+          bottom: '0px',
           color:'white',
-          borderBottom:"4px solid pink" }}>
+          borderBottom:"4px solid #d32f2f" }}>
             { manuals.textBerjalan }
           </marquee>
           ))}

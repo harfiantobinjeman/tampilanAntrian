@@ -7,7 +7,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 const cards = [
   {
     antrian: 'ANTRIAN',
-    title: 'LOKET-umum',
+    title: 'LOKET-UMUM',
     noAntrian: 'B-111',
   },{
     antrian: 'ANTRIAN',
@@ -79,7 +79,7 @@ const Panggil = () => {
     
     //console.log(angLoket[0]);
     
-    let noAntrian = new Audio(`/sound/${a}.wav`);
+    let noAntrian = new Audio(`/sound/antrian.wav`);
     let abjdAntrian = new Audio(`/sound/${strNoAntri[0]}.wav`);
     let description = new Audio(`/sound/${intNoAntri[0]}.wav`);
     let title = new Audio(`/sound/${c}.wav`);
@@ -230,7 +230,7 @@ const Panggil = () => {
             width:'30%',
             margin:'10px',
             alignContent:'center',
-            height:'200px',
+            height:'100%',
             border:"4px solid #AD88C6"}}>
             <CardActionArea
               onClick={() => 
@@ -262,12 +262,12 @@ const Panggil = () => {
                 </Typography>
                 <Typography variant="body2" color="text.secondary"sx={{
                   fontSize:'20px',
-                  bgcolor:'#F8C794' }}>
-                  {card.antrian}
+                  bgcolor:'#F8C794',
+                  borderBottom:"4px solid black"}}>
+                  ANTRIAN
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{
-                  fontSize:'80px',
-                  bgcolor:'#F8C794'}}>
+                <Typography className='Monitor-wrapper' sx={{
+                  fontSize:'80px', color:'black'}}>
                   {card.noAntrian}
                 </Typography>
               </CardContent>
