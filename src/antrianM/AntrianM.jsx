@@ -125,14 +125,23 @@ const KarcisList = ()=>{
                 <ScaleLoader height={100} width={40} size color='white'></ScaleLoader>
             </div>:""} */}
                     <div style={{
-                        minHeight:'100vh', 
+                        width:'80%',
+                        marginLeft:'10%',
+                        paddingBottom:'10%',
+                        marginTop:'2%',
                         display:'flex', 
                         justifyContent:'center', 
                         alignContent:'center', 
-                        flexDirection:'column'}}>
+                        flexDirection:'column',
+                        backgroundColor:'#e8ebed',
+                        border:'2px solid',
+                        borderRadius:'50px',
+                        boxShadow:'4px 4px 8px #bdc8d5,-4px -4px 8px #fff'
+                        }}>
                     <h1 className='ambil' style={{ 
                         marginTop:"0px",
-                        marginBottom:"40px"
+                        marginTop:"40px",
+                        textShadow:'-3px -3px 2px #9F8383'
                         }}><b>SILAHKAN AMBIL NO ANTRIAN DISINI</b></h1>
                     <div className="Karcis-container" >
                         {data?.map((antrians, index)=>(
@@ -142,7 +151,7 @@ const KarcisList = ()=>{
                         key={antrians.id}
                         // style={{ paddingTop:'0px' }}
                         >
-                            <div className="Karcis-tittle"><h1 style={{ marginTop:'8px' }}>{antrians.name}</h1></div>
+                            <div className="Karcis-tittle"><h1 style={{ margin:'0px',textShadow:'-3px -3px 2px #9F8383' }}>{antrians.name}</h1></div>
                         
                             
 
