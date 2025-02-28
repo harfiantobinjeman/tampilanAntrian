@@ -146,7 +146,7 @@ export default function Tampilan() {
           color:'white',
           borderBottom:"4px solid #d32f2f" }}>
             { manuals.textBerjalan }
-          </marquee>
+          </marquee> 
           ))}
       <Button variant="contained" style={{ position: 'fixed',bottom: '0px' }} color="error">Info   : </Button>
     </div>
