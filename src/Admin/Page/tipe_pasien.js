@@ -109,14 +109,13 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
     }
 
     return(
-        <div style={{display:'flex',flexWrap:"wrap", justifyContent:'left',alignItems:'center',paddingLeft:'30px',gap:'20px'}}>
-<div style={{transition:'0.3s ease',zIndex:modalAddOpen?60:-1,display:'flex', justifyContent:'center', alignItems:'center',position:'fixed', left:0, right:0, top:0, bottom:0,background:'rgba(232, 235, 237,0.8)',}}>
+        <div style={{display:'flex',flexWrap:"wrap", justifyContent:'left',alignItems:'center',paddingLeft:'30px',gap:'20px',background:'transparent',backdropFilter:''}}>
+<div style={{transition:'0.3s ease',zIndex:modalAddOpen?999999999:0,display:modalAddOpen?'flex':'flex', justifyContent:'center', alignItems:'center',position:'fixed',width:'100%' ,left:0, right:0, top:modalAddOpen?0:0, bottom:modalAddOpen?0:'100%',background:'rgba(232, 235, 237,0.8)',backdropFilter:'blur(5px)'}}>
 
-                                <div style={{position:'relative',marginTop:modalAddOpen?'0px':'-1000px',transition:'0.3s ease',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",background:'rgb(232, 235, 237)',borderRadius:'20px',width:'300px', height:'180px',}} >
+                                <div style={{position:'relative',marginTop:modalAddOpen?'0px':'-1000px',transition:'0.3s ease',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",background:'rgba(232, 235, 237,0.8)',borderRadius:'20px',width:'300px', height:'180px',}} >
                                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center',paddingLeft:'20px', paddingRight:'10px',paddingTop:'0px'}}>
                                         <h3 style={{fontSize:''}}>ADD TIPE PASIEN</h3>
-                                        <div className="buttonAdd" onClick={()=>{setModalAddOpen(false);setNameTipePasien("")}} style={{cursor:'pointer',display:'flex', borderRadius:'50%', justifyContent:'center',background:"rgb(232, 235, 237)" ,alignItems:'center', padding:'10px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)"}}>
-                                            {/* <div style={{display:'flex', justifyContent:'center',alignItems:'center',width:'30px',height:'30px',fontSize:'30px', fontWeight:'800',textShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)"}}>X</div> */}
+                                        <div className="buttonAdd" onClick={()=>{setModalAddOpen(false);setNameTipePasien("")}} style={{cursor:'pointer',display:'flex', borderRadius:'50%', justifyContent:'center',background:"" ,alignItems:'center', padding:'10px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)"}}>
                                             <MdClose style={{fontSize:'20px',fontWeight:'600', color:"#131313", textShadow:""}}></MdClose>
                                         </div>
                                     </div>
@@ -129,27 +128,30 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
                                     </div>
                                     </div>
                                     <div onClick={()=>{handleSaveTipePasien()}} className="buttonAdd" style={{cursor:'pointer',bottom:10,right:10,position:'absolute',display:'flex', justifyContent:'end', paddingRight:''}}>
-                                        <div style={{padding:'10px', display:'flex', justifyContent:'center', alignItems:'center',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",textShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)", background:'#e8ebed',borderRadius:'5px', color:'#131313',fontWeight:800}}>SAVE</div>
+                                        <div style={{padding:'10px', display:'flex', justifyContent:'center', alignItems:'center',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",textShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)", background:'#fafafa',borderRadius:'10px', color:'#131313',fontWeight:800}}>SAVE</div>
                                     </div>
                                 </div>
                         </div>
 
+                        <div style={{display:'flex', alignItems:'center', flexWrap:'wrap',background:'none', gap:'30px'}}>
 
                        {data?.map((aa,val)=>{
 
                         return(
-                        <div className='nft' style={{padding:"20px 20px"}}>
-                            <div  style={{textShadow: "4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",fontSize:'20px', fontWeight:'600',marginTop:'0px',marginBottom:"18px", display:'flex', gap:'10px',alignItems:'center', justifyContent:'center'}}>
+                        <div className='' style={{padding:"",width:'calc(33% - 25px)', background:'none'}}>
+                            <div   className="anak"style={{border:!dataEdit[aa.id]?"":"1px solid rgba(0,0,0,0.1)",background:!dataEdit[aa.id]?"linear-gradient(90deg, rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.8) 20%, rgba(0,0,0,1) 100%)":"#e8ebed",fontSize:'20px', fontWeight:'600',marginTop:'0px', display:'flex', gap:'10px',alignItems:'center', justifyContent:'center', borderTopLeftRadius:'20px',borderTopRightRadius:"20px"}}>
                             {!dataEdit[aa.id]?aa.name:
-                                <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:"200px", height:'35px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",borderRadius:"40px"}}>
+                                <div style={{display:'flex',justifyContent:'center',alignItems:'center',width:"200px", height:'35px',boxShadow:"4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",borderRadius:"40px",}}>
 
 <input value={dataEditVal[aa.id]} onChange={(e)=>{ setDataEditVal(cc=>({[aa.id]:e.target.value}))}} className="inputLoket" style={{fontWeight:600,textShadow: "4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255)",fontSize:'13px',border:'none', background:'none'}} placeholder="Nama Loket"></input>
                                 
 
                             </div>}
-                                {!dataEdit[aa.id]?<MdEdit onClick={()=>{setDataEdit(bb=>({[aa.id]:true}) ); setDataEditVal(cc=>({...cc,[aa.id]:aa.name}))}}  className='hover-button' style={{color:'#131313',cursor:'pointer'}}></MdEdit>:<div><MdCancel onClick={()=>{setDataEdit(bb=>({...bb,[aa.id]:false}) ); setDataEditVal(cc=>({...cc,[aa.id]:""}))}} style={{color:'red',cursor:'pointer'}} ></MdCancel><MdSaveAs onClick={()=>handleSave(aa.id)}></MdSaveAs></div>}
+                                {!dataEdit[aa.id]?<MdEdit onClick={()=>{setDataEdit(bb=>({[aa.id]:true}) ); setDataEditVal(cc=>({...cc,[aa.id]:aa.name}))}}  className='hover-button' style={{color:'white',cursor:'pointer'}}></MdEdit>:<div><MdCancel onClick={()=>{setDataEdit(bb=>({...bb,[aa.id]:false}) ); setDataEditVal(cc=>({...cc,[aa.id]:""}))}} style={{color:'red',cursor:'pointer'}} ></MdCancel><MdSaveAs style={{color:'black'}} onClick={()=>handleSave(aa.id)}></MdSaveAs></div>}
 
                             </div>
+                            <div className="nft">
+
                             <div style={{display:'flex', justifyContent:'space-evenly', gap:'5px'}}>
                                 <div style={{background:''}}>
                                    
@@ -187,9 +189,10 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
 
                                 </div>
                             </div>
-                           
+                           </div>
                         </div>)
                     })}
+                    </div>
                     </div>
     )
 }
