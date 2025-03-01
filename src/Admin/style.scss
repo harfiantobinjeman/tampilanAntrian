@@ -1,7 +1,523 @@
-.img-profile{
-  width: 55px;
-  height: 55px;
-  border-radius: 50%; 
-  box-shadow: 4px 4px 8px rgb(189 200 213), -4px -4px 8px rgb(255 255 255);
-  border: 2px solid #e8eaec;
-}
+// TABLE OF CONTENTS 
+// 1. VARIABLES
+// 2. TYPOGRAPHY
+// 3. BUTTONS
+// 4. INPUTS
+// 5. CHEKBOXES/RADIOS
+// 6. CARD
+// 7. TOGGLE CUSTOM CHECKBOX
+
+// 1. VARIABLES
+// colors
+body {
+    // base  color
+    --base1: #EBEFF3;
+    --base2: #e8ebed;
+    --base3: #88A1B7;
+    --baseDark1: #396387;
+    --baseDark2: #204566;
+    --baseDark3: #152E44;
+    --base: #090E10;
+    
+  
+    // NEON color
+    --primary1: #FFA68B;
+    --primary2: #FF7145;
+    --primary3: #FF3D00;
+    --primaryDark1: #BA2D00;
+    --primaryDark2: #741C00;
+    --primaryDark3: #5C2511;
+ 
+    // FF3D00
+  
+    // if you want to use auto dark mode instead of toggle
+    // @media (prefers-color-scheme: dark) {
+    //   --base1: #2F4858;
+    //   --base2: #233541;
+    //   --base3: #162128;
+    //   --baseDark1: #ECEEEF;
+    //   --baseDark2: #B3BCC2;
+    //   --baseDark3: #7A8A94;
+    // }
+    
+  
+  }
+  
+  // for dark mode
+ 
+  
+  // shadows
+  body {
+    --base-shadow: inset 0px 0px 0px var(--base3),
+    inset 0px 0px 0px var(--base1),
+    4px 4px 9px var(--base3),
+    -4px -4px 9px var(--base1);
+  
+    --base-shadow-active: inset 4px 4px 9px var(--base3),
+    inset -4px -4px 6px var(--base1),
+    2px 2px 9px var(--base3),
+    -2px -2px 9px var(--base1);
+  
+    --base-shadow-neutral: inset 0px 0px 0px var(--base3),
+    inset 0px 0px 0px var(--base1),
+    4px 4px 16px var(--base2),
+    -4px -4px 16px var(--base2);
+  
+    --base-shadow-neutral-active: inset 2px 2px 6px var(--base3),
+    inset -2px -2px 6px var(--base1),
+    2px 2px 6px var(--base3),
+    -2px -2px 6px var(--base1);
+  
+  
+    // primary shadows
+    --primary-shadow: inset 0px 0px 0px var(--primary3),
+    inset 0px 0px 0px var(--primary1),
+    4px 4px 9px var(--primary3),
+    -4px -4px 9px var(--primary1);
+  
+    --primary-shadow-active: inset 4px 4px 9px var(--primaryDark1),
+    inset -4px -4px 6px var(--primary2),
+    2px 2px 9px var(--primaryDark1),
+    -2px -2px 9px var(--primary1);
+  
+    --primary-shadow-neutral: inset 0px 0px 0px var(--primary3),
+    inset 0px 0px 0px var(--primary1),
+    4px 4px 16px var(--primary2),
+    -4px -4px 16px var(--primary2);
+  
+    --primary-shadow-neutral-active: inset 2px 2px 6px var(--primary3),
+    inset -2px -2px 6px var(--primary1),
+    2px 2px 6px var(--primary3),
+    -2px -2px 6px var(--primary1);
+  
+  
+    --shadow-transition: all 0.25s cubic-bezier(.17, .67, .83, .67);
+  
+  
+    --text-shadow: 
+      -0.6px -0.6px 0px var(--baseDark1),
+      0.6px -0.6px 0px var(--baseDark1),
+      0.6px 0.6px 0px var(--baseDark1),
+      -0.6px 0.6px 0px var(--baseDark1)
+    ;
+  
+  
+    // input shadows 
+    --input-shadow: 
+      2px 2px 9px var(--base3),
+      -2px -2px 9px var(--base1)
+    ;
+  
+    --input-shadow-active: 
+      inset 2px 2px 6px var(--base3),
+      inset -2px -2px 6px var(--base1),
+      1px 1px 6px var(--base3),
+      -1px -1px 6px var(--base1)
+    ;
+  
+    --input-shadow-valid: 
+      inset 2px 2px 4px var(--base3),
+      inset -2px -2px 4px var(--base1),
+      1px 1px 6px var(--base3),
+      -1px -1px 6px var(--base1)
+    ;
+  
+    --input-radio-inner-valid: 
+      inset 2px 2px 4px var(--base3),
+      inset -2px -2px 4px var(--base1),
+      1px 1px 4px var(--base3),
+      -1px -1px 4px var(--base1)
+    ;
+  
+  }
+  
+  
+  
+  
+  // 2. TYPOGRAPHY
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    --main-font: Helvetica, Arial, sans-serif;
+  }
+  
+//   p {
+//     font-size: 18px;
+//     line-height: 28px;
+//   }
+  
+//   h3 {
+//     font-size: 24px;
+//     line-height: 30px;
+//     font-weight: bold;
+//   }
+  
+  
+#toggle2 {
+
+    label {
+      border: 2px solid var(--base2);
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: var(--shadow-transition);
+      width: 45px;
+      height: 28px;
+      
+      box-shadow: var(--input-shadow-valid);
+      outline: none;
+  
+      &:before, &:after {
+        background-color: rgba($color: red, $alpha: 0.5);
+        border-radius: 50%;
+        content: '';
+        cursor: pointer;
+        display: inline-block;
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        transition: all ease-in-out 0.3s;
+        width: 15px;
+        height: 15px;
+        
+        box-shadow: inset 0px 0px 0px var(--base3),
+        inset 0px 0px 0px var(--base1),
+        2px 2px 3px var(--base3),
+        -2px -2px 3px var(--base1);
+      }
+      
+    }
+  
+    input[type=checkbox] {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      
+      &:focus~label,
+      &:active~label,
+      &:hover~label {
+        
+        box-shadow: var(--input-shadow-active);
+      }
+  
+      &:checked~label {
+  
+        &:before, &:after {
+        //   background-color: var(--baseDark3);
+        background: rgb(103, 17, 242);
+          transform: translateX(18px);
+        }
+  
+       
+      }
+    }
+  
+  }
+  
+  
+  // 3. BUTTONS
+  
+//   button {
+//     border-radius: 10px;
+//     padding: 10px 15px;
+//     max-width: 500px;
+//     font-size: 12px;
+//     line-height: 22px;
+//     font-weight: 900;
+//     text-transform: uppercase;
+//     transition: var(--shadow-transition);
+//     width: fit-content;
+  
+//     // props to change for other styles
+//     color: var(--baseDark2);
+//     background: var(--base2);
+//     border: 2px solid var(--base2);
+//     box-shadow: var(--base-shadow);
+  
+//     // @media (prefers-color-scheme: dark) {
+//     //   color: var(--baseDark1);
+//     // }
+  
+//     &:hover,
+//     &:active,
+//     &:focus,
+//     &.active {
+//       outline: none;
+//       box-shadow: var(--base-shadow-active);
+//       color: var(--baseDark2);
+//       border-color: var(--base3);
+  
+//       // @media (prefers-color-scheme: dark) {
+//       //   color: var(--baseDark1);
+//       //   border-color: var(--baseDark1);
+//       // }
+//     }
+  
+//     &:disabled {
+//       color: var(--base3);
+//       background: var(--base2);
+//       border-color: var(--base3);
+//       box-shadow: 4px 4px 16px var(--base2), -4px -4px 16px var(--base2);
+//       transition: unset;
+  
+//       span {
+//         transition: unset;
+//         transform: unset;
+//       }
+  
+//       &:hover,
+//       &:active,
+//       &:focus {
+//         color: var(--base3);
+//         background: var(--base2);
+//         border-color: var(--base3);
+//         box-shadow: unset;
+//       }
+//     }
+//   }
+  
+  .tertiary {
+    box-shadow: var(--base-shadow-neutral);
+  
+    &:hover, &:active, &:focus {
+      box-shadow: var(--base-shadow-neutral-active);
+    }
+  }
+  
+  
+  
+  
+  
+  // 4. INPUTS
+  input {
+    border: none;
+    box-sizing : border-box;
+  }
+  
+  .text-input-group {
+    position: relative;
+  
+    label, input {
+      font-size: 14px;
+      line-height: 20px;
+      font-family: var(--main-font);
+      color: var(--baseDark1);
+    }
+  
+    label {
+      position: absolute;
+      left: 18px;
+      top: 17px;
+      transform-origin: left top;
+      transition: all 0.25s linear;
+    }
+  
+    input {
+      appearance: none;
+      width: 100%;
+      border-radius: 10px;
+      min-height: 30px;
+      padding: 10px 15px;
+      margin-top: 5px;
+      background: var(--base2);
+      border: 2px solid var(--base2);
+      box-shadow: var(--input-shadow);
+      transition: var(--shadow-transition);
+      // text-shadow: var(--text-shadow);
+      color: var(--base3);
+  
+      &::placeholder {
+        color: var(--base2);
+        transition: color 0.25s linear;
+        text-shadow: none;
+      }
+  
+      &:focus:enabled, &:active:enabled {
+        outline: none;
+        color: var(--baseDark2);
+        border-color: var(--base3);
+        box-shadow: var(--input-shadow-active);
+        @media (prefers-color-scheme: dark) {   
+          border-color: var(--baseDark1);
+        }
+        
+  
+        &::placeholder {
+          color: var(--base3);
+          @media (prefers-color-scheme: dark) {
+            color: var(--baseDark2);
+          }
+        }
+  
+        &+label {
+          transform: translateY(-34px) scale(0.9);
+          font-weight: 600;
+        }
+      }
+  
+      &:valid {
+        box-shadow: var(--input-shadow-valid);
+        color: var(--baseDark1);
+        &+label {
+          transform: translateY(-34px) scale(0.9);
+          font-weight: 600;
+        }
+      }
+  
+      &:disabled {
+        color: var(--base3);
+        background: var(--base2);
+        border-color: var(--base3);
+        box-shadow: var(--input-shadow-neutral);
+        transition: unset;
+  
+        &+label {
+          color: var(--base3);
+        }
+      }
+  
+    }
+  }
+  
+  
+  
+  
+  
+  // 5. CHECKBOXES/RADIOS
+  .radios {
+    display: grid;
+    padding: 10px;
+  }
+  
+  .radio-wrapper {
+    margin: 0.5rem 0;
+  }
+  
+  input[type="radio"], 
+  input[type="checkbox"] {
+    opacity: 0;
+  
+    +label {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+  
+      span { margin-left: 6px; }
+  
+      &::before {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        top: -2px;
+        left: -24px;
+        border-radius: 50%;
+        border: 2px solid var(--base2);
+        box-shadow: var(--input-shadow);
+        box-shadow: var(--input-shadow-valid);
+  
+        width: 18px;
+        height: 18px;
+      }
+  
+      &::after {
+        content: '';
+        position: absolute;
+        display: inline-block;
+        left: -19px;
+        top: 3px;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        transform-origin: center center;
+        transform: scale(0);
+        transition: var(--shadow-transition);
+      }
+    }
+  
+    &:checked {
+      +label{
+        &::before {
+          box-shadow: var(--input-radio-inner-valid);
+  
+        }
+        &::after { 
+          background: var(--baseDark1);
+          transform: scale(1);
+        }
+      }
+    }
+  
+    &:focus, &:active {
+      +label{
+        span { font-weight: 600; }
+        &::before { 
+          box-shadow: var(--input-shadow-active); 
+          border-color: var(--base3);
+          @media (prefers-color-scheme: dark) {
+            border-color: var(--baseDark2);
+          }
+        }
+      }
+    }
+  }
+  
+  input[type="checkbox"] {
+    + label::before {
+      border-radius: 6px;
+      box-shadow: var(--input-radio-inner-valid);
+    }
+    &+label::after {
+      content: "\2713";
+    }
+    &:checked+label::after {
+      top: 0;
+      background-color: transparent;
+    }
+  }
+  
+  
+  
+  // 6. CARD
+  .card-inputs {
+    border-radius: 10px;
+    display: grid;
+    grid-gap: 10px;
+    max-width: 500px;
+    padding: 15px 20px;
+  
+    background: var(--base2);
+    border: 2px solid var(--base3);
+  
+    &__content {
+      max-width: 600px;
+      display: grid;
+      grid-gap: 20px;
+    }
+  
+  
+    &__footer {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: auto auto;
+      justify-content: flex-start;
+    }
+  }
+  
+
+  
+  
+    .input-fields {
+      display: grid;
+      grid-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+  
+      @media screen and (max-width: 500px) {
+        grid-template-columns: 1fr;
+        grid-gap: 30px 20px;
+      }
+    }
+  
+  

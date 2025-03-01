@@ -79,11 +79,11 @@ const Login = () => {
   return (
     <div>
         <header >
-            <div style={{backgroundImage:"url('./new106.png')" ,display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', width:'100vw'}}>
-                <Card sx={{ maxWidth: 345, p : 6 }} style={{borderBottom:'2px solid rgba(31, 76, 248, 0.4)',borderLeft:'2px solid rgba(31, 76, 248, 1)',borderRight:"2px solid rgba(250, 27, 194,0.3)",borderTop:"2px solid rgba(250, 27, 194,0.2)",backdropFilter:"blur(0px)",boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",background: 'rgba(31, 76, 248, 0.23)'}}>
-                    <h3 style={{color:'rgb(145, 244, 255)'}}>WELCOME BACK</h3>
+            <div style={{backgroundImage:"url('./bg.jfif')" ,display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', width:'100vw'}}>
+                <Card sx={{ width: 405, p : 6 }} style={{border:'2px solid rgba(255,255,255,0.3)',borderRadius:'20px',backdropFilter:"blur(40px)",boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",background: 'rgba(255, 255, 255, 0.25)'}}>
+                    <h3 style={{   color:'rgba(0,0,0,0.7)',}}>WELCOME BACK</h3>
                     <CardContent>
-                      <TextField onChange={(e)=>{setUsername(e.target.value)}} value={username}  sx={{ color:'red',fieldset: {border:"2px solid rgba(31, 76, 248, 1)"}, input: { color: 'rgb(145, 244, 255)'} }} id="outlined-basic" label="Name" variant="outlined" />
+                      <TextField onChange={(e)=>{setUsername(e.target.value)}} value={username}  id="outlined-basic" label="Name" variant="outlined" />
                     </CardContent>
 
 
@@ -95,7 +95,7 @@ const Login = () => {
                       label="Password"
                       type="password"
                       autoComplete="current-password"
-                      sx={{ color:'red',fieldset: { border:"2px solid rgba(31, 76, 248, 1)"}, input: { color: 'rgb(145, 244, 255)'} }}
+                    
                     />
                     </CardContent>
                 
@@ -110,13 +110,15 @@ const Login = () => {
                           display:'flex',
                           justifyContent:'center',
                           alignItems:'center',
-                          border:'2px solid rgba(31, 76, 248, 1)',
-                          height: loading?"60px":'40px',
-                          borderRadius:'4px',
                         
+                          height: loading?"60px":'40px',
+                          borderRadius:'10px',
+                             background:"rgba(255,255,255,0.2)",
+                             backdropFilter:"blur(10px)",
                             width:loading?'100px':'100px',
-                            backdropFilter:"blur(0px)",boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",
-                            color:"rgb(145, 244, 255)",
+                            boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",
+                            color:'rgba(0,0,0,0.7)', fontWeight:1000,WebkitTextStroke:'2px  rgba(255,255,255,0.5)'
+                           
                            
                             }}
                         

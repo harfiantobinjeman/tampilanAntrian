@@ -19,7 +19,7 @@ import Patien from './../images/patient.png'
 import Loket from './Page/loket';
 
 import TipePasienPage from './Page/tipe_pasien';
-import { MdCreate, MdPlusOne } from 'react-icons/md';
+import { MdAdd, MdCreate, MdPlusOne } from 'react-icons/md';
 import { ToastContainer } from 'react-toastify';
 
 
@@ -27,11 +27,14 @@ const Admin = ()=>{
     const handleClickMenu = (menu)=>{
         window.location = `/admin?page=${menu}`
     }
+    const [showModal, setShowModal] = useState(false)
     const [showMenu, setShowMenu] = useState(true)
     const [searching, setSearching] = useState("")
     const [modalAddOpen, setModalAddOpen] = useState(false)
     const [profileOpen, setProfileOpen] = useState(false)
-
+    const [showProfile,setShowProfile] = useState(false)
+ const [searchTerm, setSearchTerm] = useState('')
+   
     useEffect(()=>{
             if(!localStorage.getItem("token")){
                 window.location = `/login`
@@ -43,7 +46,7 @@ const Admin = ()=>{
     // console.log(query.get("page"))
     // console.log(query)
     return(
-        <div style={{backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat',padding:"0px", width:'100vw', height:'100vh',color:'black',overflowY:'auto'}} >
+        <div style={{position:'',backgroundSize:'cover',backgroundPosition:'center center',backgroundRepeat:'no-repeat',padding:"0px", width:'100vw', height:'100vh',color:'black',overflowY:'auto', overflowX:'hidden'}} >
             <div  className={`show ${!showMenu?"menu-toggle":""}`}   >
         <div className="nav-header" style={{borderTopRightRadius:'20px',borderTopLeftRadius:"20px",}}>
             <a href="/admin" className="brand-logo">
@@ -57,22 +60,29 @@ const Admin = ()=>{
                 </div>
             </div>
         </div>
-        <div class="header" style={{position:'sticky', top:0}} >
+        <div class="header" style={{position:'sticky', top:0,height:'90px'}} >
             <div class="header-content">
                 <nav class="navbar navbar-expand" >
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left" style={{marginLeft:'-30px'}}>
-							<div class="dashboard_bar">
+							<div class="dashboard_bar" >
                                 {query.get("page")?query.get("page")?.toUpperCase():"DASHBOARD"} 
                             </div>
                         </div> 
                         <ul class="navbar-nav header-right">
-							<li class="nav-item" style={{marginRight:'30px'}}>
+                            {query.get("page")?<li class="nav-item" style={{marginRight:'30px'}}>
 								<div class="input-group search-area">
-									<input type="text" class="form-control" placeholder="Search here..." />
-									<span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
+									<input onChange={(e)=> setSearchTerm(e.target.value)} value={searchTerm} type="text" class="form-control" placeholder="Search here..." />
+									<span class="input-group-text"><a href=""><i class="flaticon-381-search-2"></i></a></span>
 								</div>
-							</li>
+							</li>:""}
+                            {query.get("page")?<li class="nav-item "  onClick={()=>{setShowModal(aa=>!aa)}}>
+								<div href="" class="btn btn-primary d-sm-inline-block d-none nidzam-button" style={{letterSpacing:'1px',fontWeight:600,display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                    <MdAdd style={{fontSize:'25px', fontWeight:600, marginRight:'5px', }}></MdAdd>
+                                        Create Data
+                                
+                                    </div>
+							</li>:""}
                             {/* <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="javascript:void(0);" data-bs-toggle="dropdown">
 									<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M3.88552 6.2921C1.95571 6.54135 0.439911 8.19656 0.439911 10.1896V10.7253C0.439911 12.8874 2.21812 14.6725 4.38019 14.6725H12.7058V24.9768H7.01104C5.77451 24.9768 4.82009 24.0223 4.82009 22.7858V18.4039C4.84523 16.6262 2.16581 16.6262 2.19096 18.4039V22.7858C2.19096 25.4334 4.36345 27.6059 7.01104 27.6059H21.0331C23.6807 27.6059 25.8532 25.4334 25.8532 22.7858V13.9981C26.9064 13.286 27.6042 12.0802 27.6042 10.7253V10.1896C27.6042 8.17115 26.0501 6.50077 24.085 6.28526C24.0053 0.424609 17.6008 -1.28785 13.9827 2.48534C10.3936 -1.60185 3.7545 1.06979 3.88552 6.2921ZM12.7058 5.68103C12.7058 5.86287 12.7033 6.0541 12.7058 6.24246H6.50609C6.55988 2.31413 11.988 1.90765 12.7058 5.68103ZM21.4559 6.24246H15.3383C15.3405 6.05824 15.3538 5.87664 15.3383 5.69473C15.9325 2.04532 21.3535 2.18829 21.4559 6.24246ZM4.38019 8.87502H12.7058V12.0382H4.38019C3.62918 12.0382 3.06562 11.4764 3.06562 10.7253V10.1896C3.06562 9.43859 3.6292 8.87502 4.38019 8.87502ZM15.3383 8.87502H23.6656C24.4166 8.87502 24.9785 9.43859 24.9785 10.1896V10.7253C24.9785 11.4764 24.4167 12.0382 23.6656 12.0382H15.3383V8.87502ZM15.3383 14.6725H23.224V22.7858C23.224 24.0223 22.2696 24.9768 21.0331 24.9768H15.3383V14.6725Z" fill="#4f7086"/> 
@@ -98,9 +108,17 @@ const Admin = ()=>{
 									<span class="badge light text-white bg-primary rounded-circle">5</span>
                                 </a>
 							</li> */}
-                            <li class="nav-item">
-                                <img src={Man} className='img-profile' width="20" alt=""/>
-								{/* <a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block d-none">Generate Report<i class="las la-signal ms-3 scale5"></i></a> */}
+                            <li class="">
+                                <div   style={{cursor:'pointer',position:'relative',borderRadius:'50%',display:'flex',marginLeft:'25px',width:'calc(60px)',height:'60px',padding:'20px',justifyContent:'center',alignItems:'center',boxShadow:"-3px -3px 7px #ffffff73,3px 3px 5px rgba(94,104,121,0.288)"}}>
+
+                                    <img onClick={()=>{setShowProfile(aa=>!aa)}} src={Man} className='img-profile' width="56" height={56} alt=""/>
+								<div className='bg-success' style={{transition:'0.3s ease',overflow:'hidden',position:'absolute', top:70, right:showProfile?0:"-1000px",borderRadius:'20px',padding:'20px', width:'200px'}}>
+                                    <div  style={{position:'absolute',borderRadius:'30px',left:"50px",top:'50px',transform:'rotate(60deg)',width:'100%',height:'100%',background:"linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#26ffffff', endColorstr='#00ffffff',GradientType=1 )"}}></div>
+                                    <div style={{borderBottom:'2px solid white',color:'white',fontWeight:'600'}}>Hi, Nidzam Ganteng</div>
+                                    <div onClick={()=>{localStorage.removeItem("token");window.location="/login"}} className='nidzam-button-save2' style={{cursor:'pointer',color:'white',width:'100%', textAlign:'left', fontWeight:'600',marginTop:'10px'}}>Logout</div>
+
+                                </div>
+                                </div>
 							</li>
                         </ul>
                     </div>
@@ -114,7 +132,7 @@ const Admin = ()=>{
                
                     <li >
                         <a  className='' href='/admin?page=user' style={{cursor:'pointer'}} >
-                            <div className={`${query.get("page")=="user"?"btn btn-rounded  btn-primary":""}`} style={{marginLeft:query.get("page")=="user"?'-20px':"0px",marginRight:query.get("page")=="user"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
+                            <div className={`${query.get("page")=="user"?"btn btn-rounded  btn-primary":""}`} style={{fontWeight:600,marginLeft:query.get("page")=="user"?'-20px':"0px",marginRight:query.get("page")=="user"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
                                 <FaUser color={`${query.get("page")=="user"?"white":"gray"}`} fontSize={40} ></FaUser>
                                 <span class="nav-text">User</span>
                             </div>
@@ -124,7 +142,7 @@ const Admin = ()=>{
                     <li>
                         
                         <a  className='' href='/admin?page=role' style={{cursor:'pointer'}} >
-                            <div className={`${query.get("page")=="role"?"btn btn-rounded  btn-primary":""}`} style={{marginLeft:query.get("page")=="role"?'-20px':"0px",marginRight:query.get("page")=="role"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
+                            <div className={`${query.get("page")=="role"?"btn btn-rounded  btn-primary":""}`} style={{fontWeight:600,marginLeft:query.get("page")=="role"?'-20px':"0px",marginRight:query.get("page")=="role"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
                                 <AiFillControl  color={`${query.get("page")=="role"?"white":"gray"}`} fontSize={40} ></AiFillControl>
                                 <span class="nav-text">Role</span>
                             </div>
@@ -133,7 +151,7 @@ const Admin = ()=>{
                     </li>
                     <li>
                     <a  className='' href='/admin?page=loket' style={{cursor:'pointer'}} >
-                    <div className={`${query.get("page")=="loket"?"btn btn-rounded  btn-primary":""}`} style={{marginLeft:query.get("page")=="loket"?'-20px':"0px",marginRight:query.get("page")=="loket"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
+                    <div className={`${query.get("page")=="loket"?"btn btn-rounded  btn-primary":""}`} style={{fontWeight:600,marginLeft:query.get("page")=="loket"?'-20px':"0px",marginRight:query.get("page")=="loket"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
                                 <FaPersonBooth color={`${query.get("page")=="loket"?"white":"gray"}`} fontSize={40} ></FaPersonBooth>
                                 <span class="nav-text">Loket</span>
                             </div>
@@ -142,7 +160,7 @@ const Admin = ()=>{
                     </li>
                     <li>
                     <a  className='' href='/admin?page=tipe_pasien' style={{cursor:'pointer'}} >
-                    <div className={`${query.get("page")=="tipe_pasien"?"btn btn-rounded  btn-primary":""}`} style={{transition:'0.3s ease',marginLeft:query.get("page")=="tipe_pasien"?'-20px':"0px",marginRight:query.get("page")=="tipe_pasien"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
+                    <div className={`${query.get("page")=="tipe_pasien"?"btn btn-rounded  btn-primary":""}`} style={{fontWeight:600,transition:'0.3s ease',marginLeft:query.get("page")=="tipe_pasien"?'-20px':"0px",marginRight:query.get("page")=="tipe_pasien"?'-20px':"0px",display:'flex',gap:'20px', fontSize:'20px',justifyContent:'start',alignItems:'center' }}>
                                 <FaUserDoctor color={`${query.get("page")=="tipe_pasien"?"white":"gray"}`} fontSize={40} ></FaUserDoctor>
                                 <span class="nav-text">Tipe Pasien</span>
                             </div>
@@ -155,11 +173,11 @@ const Admin = ()=>{
         </div>                
 
         {!query.get("page")?<Dashboard></Dashboard>:""}
-        {query.get("page")=="loket"?<Loket></Loket>:""}
+        {query.get("page")=="loket"?<Loket showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></Loket>:""}
 
-                    <ToastContainer />
-            
+                   
                     </div>
+                    <ToastContainer />  
         </div>
     )
 }
