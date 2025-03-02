@@ -85,12 +85,10 @@ const Login = () => {
                     <CardContent>
                       <TextField onChange={(e)=>{setUsername(e.target.value)}} value={username}  id="outlined-basic" label="Name" variant="outlined" />
                     </CardContent>
-
-
-
                     <CardContent>
                     <TextField
-                   onChange={(e)=>{setPassword(e.target.value)}} value={password}
+                     
+                      onChange={(e)=>{setPassword(e.target.value)}} value={password}
                       id="outlined-password-input"
                       label="Password"
                       type="password"
@@ -98,8 +96,10 @@ const Login = () => {
                     
                     />
                     </CardContent>
-                
-                   <div  style={{ display:'flex', marginTop:'15px',justifyContent:'center'}}>
+                   <div  style={{ 
+                    display:'flex', 
+                    marginTop:'15px',
+                    justifyContent:'center'}}>
                       <div onClick={()=>{
                         loading?console.log("a"):handleLogin()
                       }}
@@ -124,9 +124,16 @@ const Login = () => {
                         
                       >
                         
-                        {loading?<SyncLoader  color='rgb(145, 244, 255)' size={20}/>:<Typography  style={{fontWeight:'700',fontSize:'17px'}}  variant="p" component="div" sx={{ p:'2px' }}> 
+                        {loading?
+                        <SyncLoader  color='rgb(145, 244, 255)' size={20}/>
+                          :
+                        <Typography  
+                          style={{fontWeight:'700',fontSize:'17px'}}  
+                          variant="p" 
+                          component="div" 
+                          sx={{ p:'2px' }}> 
                               LOGIN
-                           </Typography>}
+                        </Typography>}
                       </div>
                       </div>
                           

@@ -6,29 +6,64 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Panggil from './Card';
+import Button from '@mui/material/Button';
+import manual from './manual.json'
 
 const cards = [
   {
-    id: 1,
+    antrian: 'ANTRIAN',
     title: 'LOKET 1',
-    description: 'No Antrian',
-    noAntrian: 'A-1',
+    noAntrian: 'A-7',
   },{
-    id: 1,
+    antrian: 'ANTRIAN',
     title: 'LOKET 2',
-    description: 'No Antrian',
-    noAntrian: 'B-1',
+    noAntrian: 'A-9',
   },{
-    id: 1,
+    antrian: 'ANTRIAN',
     title: 'LOKET 3',
-    description: 'No Antrian',
-    noAntrian: 'C-1',
+    noAntrian: 'A-7',
   }
 ];
 
 
+
 export default function Tampilan() {
-  const [selectedCard, setSelectedCard] = React.useState(0);
+
+  const start = (a,b,c) => {
+
+    let strNoAntri = b.split("")
+    console.log(strNoAntri[0])
+    console.log(strNoAntri[2])
+
+    let angLoket = c.match(/(\d+)/);
+    console.log(angLoket[0]);
+    
+    let noAntrian = new Audio(`/sound/antrian.wav`);
+    let abjdAntrian = new Audio(`/sound/${strNoAntri[0]}.wav`);
+    let description = new Audio(`/sound/${strNoAntri[2]}.wav`);
+    let title = new Audio(`/sound/${c}.wav`);
+    let bunyi = new Audio(`/sound/in.wav`);
+    let loket = new Audio(`/sound/loket.wav`);
+    let nomorLoket = new Audio(`/sound/${angLoket[0]}.wav`)
+    //noAntrian.play(SkipNext), description.play(); title.play()
+    bunyi.play()
+    bunyi.addEventListener('ended',function(){
+        noAntrian.play();
+        noAntrian.addEventListener('ended',function(){
+          abjdAntrian.play();
+          abjdAntrian.addEventListener('ended',function(){
+            description.play();
+            description.addEventListener('ended',function(){
+              loket.play();
+              loket.addEventListener('ended',function(){
+                  nomorLoket.play();
+                })
+              })
+            })
+          })
+    })
+  }
+
   return (
     <div style={{ display:'flex', width:'100%',backgroundColor:'purple',alignContent:'center',height:'10000px'}}>
       <Box sx={{ width:'70%',bgcolor:'purple', margin:'10px' }}>
@@ -51,19 +86,21 @@ export default function Tampilan() {
           <Card sx={{
             width:'90%',
             margin:'10px',
-            height:'200px',
+            height:'190px',
             border:"4px solid #AD88C6"}}>
             <CardActionArea
-              onClick={() => setSelectedCard(index)}
-              data-active={selectedCard === index ? '' : undefined}
+              onClick={() => 
+                (start(
+                  card.antrian,
+                  card.noAntrian,
+                  card.title))
+              }
               sx={{
                 height: '100%',
-                '&[data-active]': {
                   backgroundColor: 'action.selected',
                   '&:hover': {
                     backgroundColor: 'action.selectedHover',
                   },
-                },
               }}
             >
               <CardContent sx={{
@@ -78,29 +115,40 @@ export default function Tampilan() {
                 </Typography>
                 <Typography variant="body2" color="text.secondary"sx={{
                   fontSize:'20px',
-                  bgcolor:'#F8C794' }}>
-                  {card.description}
+                  bgcolor:'#F8C794',
+                  borderBottom:"4px solid black"}}>
+                  ANTRIAN
                 </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{
-                  fontSize:'80px',
-                  bgcolor:'#F8C794'}}>
+                <Typography className='Monitor-wrapper' sx={{
+                  fontSize:'80px', color:'black'}}>
                   {card.noAntrian}
                 </Typography>
+                {/* <CardMedia
+                  component="audio"
+                  image ={`/sound/${card.title}.wav`}
+                  id='panggil'
+                  autoPlay>
+                </CardMedia> */}
               </CardContent>
             </CardActionArea>
+            
           </Card>
           
         ))}
       </Box>
+      {manual.map((manuals, index) => (
       <marquee style={{
           fontSize:'20px',
           fontWeight:'bold',
           position: 'fixed',
           width: '100%',
-          bottom: '10px',
-          border: '3px solid #8AC007;' }}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio voluptate animi iusto minima, temporibus aut harum adipisci consequuntur maiores, illum corporis nam sint laborum, nostrum eum quas. Ab, quidem delectus.
-          </marquee>
+          bottom: '0px',
+          color:'white',
+          borderBottom:"4px solid #d32f2f" }}>
+            { manuals.textBerjalan }
+          </marquee> 
+          ))}
+      <Button variant="contained" style={{ position: 'fixed',bottom: '0px' }} color="error">Info   : </Button>
     </div>
   );
 }

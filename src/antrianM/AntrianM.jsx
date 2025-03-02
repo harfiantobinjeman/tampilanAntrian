@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
-import { ScaleLoader } from 'react-spinners';
+//import { ScaleLoader } from 'react-spinners';
 // import useSWR from "swr";
 
 const KarcisList = ()=>{
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    //const [loading, setLoading] = useState(false)
 
   
     const [fetchLagi, setFetchLagi] = useState(false)
@@ -14,7 +14,7 @@ const KarcisList = ()=>{
     const componentRef = useRef(null);
 
     const handleAfterPrint = React.useCallback(() => {
-        setLoading(false)
+        //setLoading(false)
         
           componentRef.current.innerHTML =""
       console.log("`onAfterPrint` called");
@@ -45,7 +45,7 @@ const KarcisList = ()=>{
             setTimeout(()=>{
 
                 socket2.send(JSON.stringify({"type":"insert-antrian","body":{"tipe_pasien_id":id}}))
-                setLoading(true)
+                //setLoading(true)
             },300)
 
         }
@@ -57,7 +57,7 @@ const KarcisList = ()=>{
             }
 
             if( data.type==="insert-antrian"){
-                componentRef.current.innerHTML =` <h1>${data?.data?.loket}</h1><div style="font-size:40px;font-weight:660;margin-top:-30px">${data?.data?.number}</div>`
+                componentRef.current.innerHTML =`<div style="text-align: center;"><img src="/logo192.png" alt="logo Perusahaan" width="80px" height="80px"><h2><b>NOMOR ANTRIAN</b></h2><h1 style="font-size:40px;font-weight:660;margin-top:-15px">${data?.data?.number}</h1><h3 style="margin-top:-20px">${data?.data?.loket}</h3><h4 style="margin-top:-10px">Harap Menunggu gilirian Anda</h4><h4 style="margin-top:-20px">TERIMA KASIH</h4></div>`
                 
                 printFn()
             }
@@ -122,9 +122,9 @@ const KarcisList = ()=>{
     <>
         <header className="App-header" style={{background:""}}>
             <div style={{margin:'50px', borderRadius:'30px',width:"calc(100vw - 100px)", height:'calc(100vh - 100px)', background:"rgba(232, 235, 237, 0.3)", backdropFilter:'blur(4px)', border:'2px solid rgba(255,255,255,0.8)'}}>
-            {loading?<div style={{position:'fixed', left:0, right:0,top:0, bottom:0, zIndex:10, background:'rgba(0,0,0,0.4)', display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <ScaleLoader height={100} width={40} size color='white'></ScaleLoader>
-            </div>:""}
+            {/* {loading?<div style={{position:'fixed', left:0, right:0,top:0, bottom:0, zIndex:10, background:'rgba(0,0,0,0.4)', display:'flex', justifyContent:'center', alignItems:'center'}}>
+                <ScaleLoader height={100} width={40} size color='white'></ScaleLoader> */}
+            {/* </div>:""} */}
                     <div style={{minHeight:'100vh', display:'flex', justifyContent:'center', alignContent:'center', flexDirection:'column'}}>
                     <h4 style={{color:'rgba(0,0,0,1)', fontWeight:1000,WebkitTextStroke:'2px  rgba(255,255,255,0.7)',marginTop:"-80px",marginBottom:"60px"}} >SILAHKAN AMBIL NO ANTRIAN DISINI</h4>
                     <div className="Karcis-container" >
