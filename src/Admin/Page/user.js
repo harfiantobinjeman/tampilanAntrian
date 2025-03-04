@@ -35,7 +35,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
         setLoading(true)
        
         axios({
-            url:`http://localhost:8000/antrian/v1/admin/user`,
+            url:`http://antrian-online.onrender.com/antrian/v1/admin/user`,
             data:{username:username,password:password,role:roleUuid,id:editId},
             method:typeModal=="edit"?"PUT":"POST",
             headers:{Authorization:"Bearer "+token}}
@@ -78,7 +78,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     },[totalData])
     useEffect(()=>{
         if(token){
-            axios.get(`http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -96,7 +96,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
             })
 
             setDataRole([])
-            axios.get(`http://localhost:8000/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then(res20=>{
+            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then(res20=>{
                     
                     setDataRole(res20?.data?.data)
                    
@@ -121,7 +121,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
             setDataLoket([])
             const delayDebounceFn = setTimeout(() => {
               
-                axios.get(`http://localhost:8000/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                     if(res?.data?.data){
                         
                     
@@ -150,7 +150,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     const handleActiveDeactive =  (id, status)=>{
         // alert(id,status)
         setLoading(true)
-        axios.post(`http://localhost:8000/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`http://antrian-online.onrender.com/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data){
                toast.success("Berhasil Update Status Loket")
                setRefresh(aa=>!aa)

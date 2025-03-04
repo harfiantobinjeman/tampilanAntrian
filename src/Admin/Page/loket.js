@@ -29,7 +29,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
         setLoading(true)
        
         axios({
-            url:`http://localhost:8000/antrian/v1/admin/loket`,
+            url:`http://antrian-online.onrender.com/antrian/v1/admin/loket`,
             data:{name:nameLoket,id:editId},
             method:typeModal=="edit"?"PUT":"POST",
             headers:{Authorization:"Bearer "+token}}
@@ -70,7 +70,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
     },[totalData])
     useEffect(()=>{
         if(token){
-            axios.get(`http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -97,7 +97,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
             setDataLoket([])
             const delayDebounceFn = setTimeout(() => {
               
-                axios.get(`http://localhost:8000/antrian/v1/admin/loket/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                     if(res?.data?.data){
                         
                     
@@ -126,7 +126,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
     const handleActiveDeactive =  (id, status)=>{
         // alert(id,status)
         setLoading(true)
-        axios.post(`http://localhost:8000/antrian/v1/admin/loket/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`http://antrian-online.onrender.com/antrian/v1/admin/loket/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data){
                toast.success("Berhasil Update Status Loket")
                setRefresh(aa=>!aa)

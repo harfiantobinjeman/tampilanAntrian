@@ -1,4 +1,7 @@
 
+html {
+  scroll-behavior: smooth;
+}
 @font-face {
   font-family: 'SplineSans-Bold';
   src: local('SplineSans-Bold'), url('./font/SplineSans-Bold.ttf') format('ttf');

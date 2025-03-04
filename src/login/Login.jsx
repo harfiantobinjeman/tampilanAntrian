@@ -69,7 +69,7 @@ const Login = () => {
   const handleLogin = ()=>{
     setLoading(true)
   
-    axios.post("http://localhost:8000/antrian/v1/admin/user/login",
+    axios.post("https://antrian-online.onrender.com/antrian/v1/admin/user/login",
     {
       username:username,
       password:password,
@@ -87,7 +87,7 @@ const Login = () => {
             window.location = "/pilihloket";
           }
 
-        },30)
+        },10)
       }else{
         toast.error("Gagal Login, periksa username/password anda")
 
