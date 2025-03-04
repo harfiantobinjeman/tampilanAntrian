@@ -117,7 +117,7 @@ const PilihLoket = ()=>{
 
     return(
         <div className="bg-glass" style={{overflow:'hidden',width:'100vw', height:'100vh', padding:'0px'}}>
-            <div style={{display:'flex',transition:'0.3s ease-in-out',justifyContent:'center',alignItems:'center',zIndex:4,position:'fixed', top:showpassword?0:-100000000, left:0, bottom:0, right:0, background:'rgba(255,255,255,0.2)'}}>
+            <div style={{display:'flex',transition:'0.3s ease-in-out',justifyContent:'center',alignItems:'center',zIndex:4,position:'fixed', top:showpassword?0:-100000000, left:0, bottom:0, right:0, background:'rgba(0,0,0,0.5)', backdropFilter:'blur(20px)'}}>
             {loading?<SyncLoader color="white" size={"30px"} style={{color:'white',fontSize:'50px'}}></SyncLoader>:<div style={{borderRadius:'20px',background:'rgba(0,0,0,0.25)', backdropFilter:'blur(25px)', width:'300px', height:'230px'}}>
                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'20px 20px'}}>
                         <div style={{color:'white',fontWeight:600, fontSize:'18px'}}>CHANGE PASSWORD</div>
@@ -143,7 +143,7 @@ const PilihLoket = ()=>{
                
                 
             }} style={{overflowX:'hidden',backdropFilter:'blur(10px)',overflowY:'auto', maxHeight:'100vh', background:'rgba(255,255,255,0.2)',}}>
-            <div style={{zIndex:999,position:'sticky',top:0, background:'rgba(37, 54, 51,0.25)',backdropFilter:'blur(10px)', width:'100%', height:'80px'}}>
+            <div style={{zIndex:999,position:'sticky',top:0, background:'rgba(0, 0, 0,0.3)',backdropFilter:'blur(30px)', width:'100%', height:'80px'}}>
                 <div style={{position:'relative',padding:'0px 50px',display:'flex', justifyContent:'center', alignItems:'center',height:'100%', width:'100%'}}>
                     <div style={{textShadow:" rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px",position:'absolute',left:'35px',fontWeight:'800', fontSize:'20px', color:'rgba(255,255,255,0.8)'}}>
                         Rumah Sakit
@@ -171,7 +171,7 @@ const PilihLoket = ()=>{
                         <div style={{position:'absolute', right:'35px'}}>
                             
                             <img onClick={()=>{setShowProfile(a=>!a)}} style={{height:'50px',cursor:'pointer',borderRadius:'50%',boxShadow:" rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px"}} src={Profile} />
-                    <div style={{right:showProfile?0:-1000,padding:'0px 15px',width:'auto',minWidth:'250px',transition:'0.3s ease-in-out',top:60,position:"absolute", background:'rgba(0,0,0,0.25)',backdropFilter:'blur(15px)', height:'160px',borderRadius:'10px', }}>
+                    <div style={{right:showProfile?0:-1000,padding:'0px 15px',width:'auto',minWidth:'250px',transition:'0.3s ease-in-out',top:60,position:"absolute", background:'rgba(0,0,0,0.5)',backdropFilter:'blur(25px)', height:'160px',borderRadius:'10px', }}>
                         <div style={{color:'white',marginTop:'20px',width:'auto',padding:'0px 0px',marginBottom:'20px',borderBottom:'2px solid white', marginLeft:'10px', marginRight:'10px'}}>
                             <h4 style={{color:'rgba(255,255,255,0.8)',fontWeight:700}}>Hi, {profile?.username}</h4>
                         </div>
