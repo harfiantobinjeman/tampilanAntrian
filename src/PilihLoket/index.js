@@ -26,9 +26,9 @@ const PilihLoket = ()=>{
 
     useEffect(()=>{ 
         setToken(localStorage.getItem('token'))
-        // if(!localStorage.getItem(token)){
-        //     window.location="/login"
-        // }
+        if(!localStorage.getItem("token")){
+            window.location="/login"
+        }
     },[])
     useEffect(()=>{
          socket2.onopen = () => {
