@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 import { HiCheckCircle } from "react-icons/hi";
@@ -35,7 +35,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
         setLoading(true)
        
         axios({
-            url:`https://antrian-online.onrender.com/antrian/v1/admin/user`,
+            url:`http://localhost:8000/antrian/v1/admin/user`,
             data:{username:username,password:password,role:roleUuid,id:editId},
             method:typeModal=="edit"?"PUT":"POST",
             headers:{Authorization:"Bearer "+token}}
@@ -78,7 +78,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     },[totalData])
     useEffect(()=>{
         if(token){
-            axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -95,14 +95,12 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
 
             })
 
-
-            axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
-                if(res?.data?.data){
+            setDataRole([])
+            axios.get(`http://localhost:8000/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then(res20=>{
                     
-                
-                    setDataRole(res?.data?.data)
+                    setDataRole(res20?.data?.data)
                    
-                }
+                
             }).catch(err=>{
                 
                 if(err?.response?.status==401){
@@ -123,7 +121,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
             setDataLoket([])
             const delayDebounceFn = setTimeout(() => {
               
-                axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                axios.get(`http://localhost:8000/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                     if(res?.data?.data){
                         
                     
@@ -152,7 +150,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     const handleActiveDeactive =  (id, status)=>{
         // alert(id,status)
         setLoading(true)
-        axios.post(`https://antrian-online.onrender.com/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`http://localhost:8000/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data){
                toast.success("Berhasil Update Status Loket")
                setRefresh(aa=>!aa)
@@ -321,6 +319,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
 											<tbody>
                                                 
                                                 {dataLoket?.map((val, index)=>{
+                                                    console.log(val.role, dataRole)
                                                     return(
 <tr>
 													<td style={{padding:'0px'}}>
@@ -337,7 +336,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
 														{/* <span class="fs-14">Cashback</span> */}
 													</td>
                                                     <td style={{padding:'0px',textShadow:""}} >
-														<h6 class="fs-16 font-w600"  style={{color:'gray'}}>{dataRole?.findIndex(a=>a.role_uuid==val?.role)!=-1?dataRole[dataRole?.findIndex(a=>a.role_uuid=val?.role)]?.name:"" }</h6>
+														<h6 class="fs-16 font-w600"  style={{color:'gray'}}>{dataRole?.findIndex(a=>a.role_uuid==val?.role)!=-1?dataRole[dataRole?.findIndex(a=>a.role_uuid=val?.role)]?.name:val.role }</h6>
 														{/* <span class="fs-14">Cashback</span> */}
 													</td>
 													<td style={{padding:'0px',textShadow:""}}>

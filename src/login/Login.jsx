@@ -69,7 +69,7 @@ const Login = () => {
   const handleLogin = ()=>{
     setLoading(true)
   
-    axios.post("https://antrian-online.onrender.com/antrian/v1/admin/user/login",
+    axios.post("http://localhost:8000/antrian/v1/admin/user/login",
     {
       username:username,
       password:password,

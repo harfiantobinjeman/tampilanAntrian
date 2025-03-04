@@ -19,7 +19,7 @@ const Dashboard = ()=>{
         if(token){
 
         setDataUserLoading(true)
-        axios.get("https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.get("http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data?.data){
                 let data =[]
                 for(let i=0;i<res?.data?.data?.length;i++){
@@ -42,7 +42,7 @@ const Dashboard = ()=>{
 
 
         setDataLoketLoading(true)
-        axios.get("https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.get("http://localhost:8000/antrian/v1/admin/loket/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data?.data){
                 let data =[]
                 for(let i=0;i<res?.data?.data?.length;i++){
@@ -65,7 +65,7 @@ const Dashboard = ()=>{
 
 
         setDataRoleLoading(true)
-        axios.get("https://antrian-online.onrender.com/antrian/v1/admin/role/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.get("http://localhost:8000/antrian/v1/admin/role/list?page=1&row_perpage=20000",{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data?.data){
                 let data =[]
                 for(let i=0;i<res?.data?.data?.length;i++){

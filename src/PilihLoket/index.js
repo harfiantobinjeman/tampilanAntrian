@@ -15,10 +15,12 @@ import { toast, ToastContainer } from "react-toastify";
 
 
 
-
 const PilihLoket = ()=>{
+    let socket2 = new WebSocket("ws://localhost:8000/antrian/v1/loket/user-id")
     const [dataLoket, setDataLoket] = useState([])
     const [token,setToken] = useState("")
+    const [fetchLagi, setFetchLagi] = useState(false)
+    
     useEffect(()=>{ 
         setToken(localStorage.getItem('token'))
         // if(!localStorage.getItem(token)){
@@ -26,8 +28,26 @@ const PilihLoket = ()=>{
         // }
     },[])
     useEffect(()=>{
+         socket2.onopen = () => {
+                    console.log("connection open")
+                };
+                socket2.onclose = () => {
+                    console.log('WebSocket connection closed');
+                };
+                socket2.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    console.log('Real-time update:', data);
+                    if(data.type==="selesai"  ||data.type=="insert-data" || data.type==="insert-antrian" || data.type=="closed" ){
+                       
+                        setFetchLagi((y)=>!y)
+                    }
+                    
+                };
+    },[])
+    useEffect(()=>{
         if(token){
-            axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            setDataLoket([])
+            axios.get(`http://localhost:8000/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -46,7 +66,7 @@ const PilihLoket = ()=>{
             })
 
         }
-    },[token])
+    },[token,fetchLagi])
 
     return(
         <div className="bg-glass" style={{overflow:'hidden',width:'100vw', height:'100vh', padding:'0px'}}>
@@ -55,13 +75,13 @@ const PilihLoket = ()=>{
                             {dataLoket?.map((val, index)=>{
                                 if(val?.status=='active'){
                                 return(
-                                    <div className="parent-loket card-loket3" style={{width:'30%',filter:val?.name=="Loket 5"?" hue-rotate(120deg)":" sepia(100%)  hue-rotate(120deg)"}}>
+                                    <div className="parent-loket card-loket3" style={{width:'30%',filter:val?.user_id?" hue-rotate(120deg)":" sepia(100%)  hue-rotate(120deg)"}}>
                                     <div className="card-loket">
                                         <div className="content-box-loket">
                                             <h1 className="card-title-loket">{val?.name}</h1>
-                                            <p className="card-content-loket">{val?.name=="Loket 5"?"Sudah Dipilih nidzamganteng":"Belum Dipilih" }</p>
+                                            <p className="card-content-loket">{val?.user_id?"Sudah Dipilih user = "+val?.user_id:"Belum Dipilih" }</p>
                                             <span onClick={()=>{
-                                                if(val?.name=="Loket 5"){
+                                                if(val?.user_id){
                                                     toast.error("Loket sudah di pilih")
                                                 }else{
                                                     localStorage.setItem("loket_id",val?.id)

@@ -22,7 +22,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
     useEffect(()=>{
         if(token){
 
-            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('http://localhost:8000/antrian/v1/admin/tipe_pasien/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setData(res?.data?.data)
             }).catch(err=>{
                 if(err?.status==401){
@@ -32,7 +32,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
                 toast.error(err?.response?.data?.message)
             })
 
-            axios.get('https://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
+            axios.get('http://localhost:8000/antrian/v1/admin/user/list?page=1&row_perpage=1000',{headers:{Authorization:"Bearer "+token}}).then(res=>{
                 setDataUser(res?.data?.data)
             }).catch(err=>{
                 if(err?.status==401){
@@ -46,7 +46,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
     const handleDeactivate = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
 
-        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/deactivate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.post('http://localhost:8000/antrian/v1/admin/tipe_pasien/deactivate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             if(err?.status==401){
@@ -60,7 +60,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
             })
     }
     const handleSaveTipePasien = ()=>{
-        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien',{name:nameTipePasien},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.post('http://localhost:8000/antrian/v1/admin/tipe_pasien',{name:nameTipePasien},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             // setData(res?.data?.data)
             setNameTipePasien("")
             setRefresh(aa=>!aa)
@@ -76,7 +76,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
     }
     const handleActivate = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
-        axios.post('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien/activate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.post('http://localhost:8000/antrian/v1/admin/tipe_pasien/activate',{id:id},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             if(err?.status==401){
@@ -92,7 +92,7 @@ const TipePasienPage = ({modalAddOpen,setModalAddOpen})=>{
 
     const handleSave = (id)=>{
         setDataLoading(aa=>({...aa,[id]:true}))
-        axios.put('https://antrian-online.onrender.com/antrian/v1/admin/tipe_pasien',{id:id,name:dataEditVal[id]},{headers:{Authorization:"Bearer "+token}}).then(res=>{
+        axios.put('http://localhost:8000/antrian/v1/admin/tipe_pasien',{id:id,name:dataEditVal[id]},{headers:{Authorization:"Bearer "+token}}).then(res=>{
             setRefresh(a=>!a)
         }).catch(err=>{
             if(err?.status==401){
