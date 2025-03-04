@@ -1,7 +1,6 @@
 import React from "react";
 import './style.css';
-import Image2 from './../images/2.png';
-import Image1 from './../images/1.jpg';
+
 
 
 const loket = [

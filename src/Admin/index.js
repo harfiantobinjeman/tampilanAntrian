@@ -21,6 +21,7 @@ import Loket from './Page/loket';
 import TipePasienPage from './Page/tipe_pasien';
 import { MdAdd, MdCreate, MdPlusOne } from 'react-icons/md';
 import { ToastContainer } from 'react-toastify';
+import UserPage from './Page/user';
 
 
 const Admin = ()=>{
@@ -174,6 +175,8 @@ const Admin = ()=>{
 
         {!query.get("page")?<Dashboard></Dashboard>:""}
         {query.get("page")=="loket"?<Loket showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></Loket>:""}
+        {query.get("page")=="user"?<UserPage showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></UserPage>:""}
+
 
                    
                     </div>

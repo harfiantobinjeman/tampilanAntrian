@@ -11,6 +11,22 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CardActionArea from '@mui/material/CardActionArea';
+import WhiteOutline from './../images/white-outline.png'
+import Dots from './../images/dots.png'
+import Coin from './../images/coin.png'
+import Spring from './../images/spring.png'
+import Rokcet from './../images/rocket.png'
+import Cloud from './../images/cloud.png'
+import Stars from './../images/stars.png'
+import { FaArrowRight, FaLock, FaUser } from "react-icons/fa";
+import './style2.css'
+import { jwtDecode } from "jwt-decode";
+
+
+
+
+// import Image1 from './../images/white-outline.png'
+
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,6 +68,7 @@ const Login = () => {
   },[])
   const handleLogin = ()=>{
     setLoading(true)
+  
     axios.post("https://antrian-online.onrender.com/antrian/v1/admin/user/login",
     {
       username:username,
@@ -60,11 +77,17 @@ const Login = () => {
     ).then((res)=>{
       if(res?.data?.data){
         localStorage.setItem("token", res?.data?.data)
+        let dataLogin = jwtDecode(res?.data?.data)
         toast.success("Berhasil Login")
         setTimeout(()=>{
-          window.location = "/admin";
+          if(dataLogin?.jti=="849c9eee-e30f-4dc5-9816-9b395b0121b7"){
+            window.location = "/admin";
 
-        },100)
+          }else{
+            window.location = "/pilihloket";
+          }
+
+        },30)
       }else{
         toast.error("Gagal Login, periksa username/password anda")
 
@@ -79,7 +102,69 @@ const Login = () => {
   return (
     <div>
         <header >
-            <div style={{backgroundImage:"url('./bg.jfif')" ,display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', width:'100vw'}}>
+          <div className='body-form'>
+            <div className='form-container' style={{overflow:'hidden'}}>
+              <div className='col col-1' style={{background:loading?'rgba(255,255,255,0.5)':"rgba(255,255,255,0.3)",position:'absolute',height:'100%',zIndex:2,width:loading?'100%':"55%", borderRadius:loading?'26px 26px 26px 26px':'26px 30% 20% 26px'}}>
+                <div className='image-layer' style={{}}>
+                  <img src={WhiteOutline} className='form-image-main'></img>
+                  <img src={Dots} className='form-image dots'></img>
+                  <img src={Coin} className='form-image coin'></img>
+                  <img src={Spring} className='form-image spring'></img>
+                  <img src={Rokcet} className='form-image rocket'></img>
+                  <img src={Cloud} className='form-image cloud'></img>
+                  <img src={Stars} className='form-image stars'></img>
+
+
+
+                </div>
+                <p className="featured-words">@copy right <span>Zaki</span> </p>
+              </div>
+              <div className='col col-22' style={{opacity:loading?0:1,position:'absolute', left:'55%'}}>
+                {/* <div className="btn-box">
+                  <button className='btn btn-1' id="login">Sign In</button> 
+                  <button className='btn btn-2'>Sign In</button>
+
+                </div> */}
+                <div className="login-form" style={{marginTop:'50px'}}>
+                  <div className="form-title">
+                    <span>Sign In</span>
+                  </div>
+                  <div className="form-inputs">
+                    <div  className="input-box" >
+                        <input value={username} onChange={(e)=>setUsername(e.target.value)} type='text' className='input-field' placeholder='Username' required></input>
+                        <i className='bx bx-user icon'>
+                          <FaUser></FaUser>
+                        </i>
+                    </div>
+                    <div  className="input-box" >
+                        <input value={password} onChange={(e)=>setPassword(e.target.value)} type='password' className='input-field' placeholder='Password' required></input>
+                        <i className='bx bx-user icon'>
+                          <FaLock></FaLock>
+                        </i>
+                    </div>
+                    
+                    <div className='input-box'>
+                        <button onClick={()=>handleLogin()} className='input-submit'>
+                          <span>Sign In</span>
+                          <i className='bx bx-right-arrow-alt'>
+                            <FaArrowRight></FaArrowRight>
+                          </i>
+                        </button>
+                    </div>
+                  </div>
+                  {/* <div className='social-login'>
+                    <i className="bx bxl-google"></i>
+                    <i className="bx bxl-google"></i>
+                    <i className="bx bxl-google"></i>
+                    <i className="bx bxl-google"></i>
+
+                  </div> */}
+                </div>
+              </div>
+
+            </div>
+          </div>
+            {/* <div style={{backgroundImage:"url('./bg.jfif')" ,display:'flex', justifyContent:'center', alignItems:'center', height:'100vh', width:'100vw'}}>
                 <Card sx={{ width: 405, p : 6 }} style={{border:'2px solid rgba(255,255,255,0.3)',borderRadius:'20px',backdropFilter:"blur(40px)",boxShadow:"0 4px 30px rgba(0, 0, 0, 0.1)",background: 'rgba(255, 255, 255, 0.25)'}}>
                     <h3 style={{   color:'rgba(0,0,0,0.7)',}}>WELCOME BACK</h3>
                     <CardContent>
@@ -140,7 +225,7 @@ const Login = () => {
                     
                    
                     </Card>
-            </div>
+            </div> */}
         </header>
         <ToastContainer />
 

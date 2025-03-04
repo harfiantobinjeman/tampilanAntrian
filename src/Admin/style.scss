@@ -380,6 +380,72 @@ body {
       }
   
     }
+
+    select {
+      appearance: none;
+      width: 100%;
+      border-radius: 10px;
+      min-height: 30px;
+      padding: 10px 15px;
+      margin-top: 5px;
+      background: var(--base2);
+      border: 2px solid var(--base2);
+      box-shadow: var(--input-shadow);
+      transition: var(--shadow-transition);
+      // text-shadow: var(--text-shadow);
+      color: var(--base3);
+  
+      &::placeholder {
+        color: var(--base2);
+        transition: color 0.25s linear;
+        text-shadow: none;
+      }
+  
+      &:focus:enabled, &:active:enabled {
+        outline: none;
+        color: var(--baseDark2);
+        border-color: var(--base3);
+        box-shadow: var(--input-shadow-active);
+        @media (prefers-color-scheme: dark) {   
+          border-color: var(--baseDark1);
+        }
+        
+  
+        &::placeholder {
+          color: var(--base3);
+          @media (prefers-color-scheme: dark) {
+            color: var(--baseDark2);
+          }
+        }
+  
+        &+label {
+          transform: translateY(-34px) scale(0.9);
+          font-weight: 600;
+        }
+      }
+  
+      &:valid {
+        box-shadow: var(--input-shadow-valid);
+        color: var(--baseDark1);
+        &+label {
+          transform: translateY(-34px) scale(0.9);
+          font-weight: 600;
+        }
+      }
+  
+      &:disabled {
+        color: var(--base3);
+        background: var(--base2);
+        border-color: var(--base3);
+        box-shadow: var(--input-shadow-neutral);
+        transition: unset;
+  
+        &+label {
+          color: var(--base3);
+        }
+      }
+  
+    }
   }
   
   

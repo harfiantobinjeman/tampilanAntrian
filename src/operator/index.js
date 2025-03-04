@@ -8,6 +8,7 @@ const OperatorList = ()=>{
     const [onPanggil, setOnPanggil] = useState(false)
     const [token,setToken] = useState("")
     const [loketId,setLoketId] = useState(0)
+    const query = new URLSearchParams(window.location.search);
     useEffect(()=>{
         setData([])
         if(localStorage.getItem("loket_id")){
