@@ -1,5 +1,6 @@
 .bg-glass{
-    background-image: url('./../images/texture-2068283_1280.jpg');
+  background-image: url('https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -61,7 +62,8 @@
     perspective: 1000px;
   }
   .card-loket{
-    padding-top: 80px;
+    padding-top: 100px;
+    height: 300px;
     transform-style: preserve-3d;
     background-image: url("https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     background-position: center center;
@@ -122,10 +124,10 @@
   }
   .date-box-loket{
     position: absolute;
-    top: 55px;
+    top: 65px;
     left: 25px;
-    height: 60px;
-    width: 60px;
+    height: 80px;
+    width: 80px;
     background-color: rgb(0,0,0);
     border-radius: 10px;
     padding: 10px;
@@ -143,7 +145,7 @@
   }
 
   .date-box-loket .date{
-    font-size: 20px;
+    font-size: 30px;
     font-weight: 900;
     color: rgb(0,136,255);
   }
@@ -181,9 +183,167 @@
       width:28%;
     }
   }
+  :root{
+    --width-circle: 150vw;
+    --radius: calc(100vw / 6);
+}
+.sliderc{
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow: hidden; 
+    position: relative;
+    
+    background-image: radial-gradient(#fff3, transparent 50%);
+    margin-top: 0px;
+}
+.sliderc .list{
+    position: relative;
+    width: max-content;
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    transition: transform 0.8s;
+    
+}
+.sliderc .list .item{
+  position: relative;
+    width: calc(var(--radius) * 2);
+    height: calc(var(--radius) * 2);
+    border-radius: 50%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transform: scale(0.5) rotate(45deg);
+    z-index: -1;
+    transition:  1s;
+}
+.sliderc .list .item:hover{
+  transform: scale(0.5);
+}
+.sliderc .list .item.active:hover{
+  transform: scale(0.9) rotate(0deg);
+}
+.sliderc .list .item.active{
+  cursor: pointer;
+    transform: scale(0.8) rotate(0deg);
+    z-index: -2;
+    transition:  1s;
 
+}
+.sliderc .list .item .cuyitem{
+    width: 90%;
+   
+    /* filter: drop-shadow(0 0 20px #000); */
+}
+.sliderc .content{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #eee;
+    width: max-content;
+}
+.sliderc .content div:nth-child(2){
+    font-size: 5rem;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    font-weight: bold;
+    position: relative;
+}
+.sliderc .content div:nth-child(2)::before{
+    position: absolute;
+    left: 60%;
+    bottom: 50%;
+    width: 80px;
+    height: 80px;
+    content: '';
+    /* background-image: url('./../images/leaves.png'); */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.sliderc .content div:nth-child(1){
+    text-align: left;
+    text-transform: uppercase;
+    transform: translateY(20px);
+}
+.sliderc .content button{
+    border: 1px solid #eee5;
+    background: transparent;
+    color: #eee;
+    font-family: Poppins;
+    letter-spacing: 5px;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+#prev,
+#next{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.85);
+    backdrop-filter: blur(30px);
+    border: 1px solid #eee9;
+    /* background-color: #eee5; */
+    color: #eee;
+    font-size: x-large;
+    font-family: monospace;
+    cursor: pointer;
+    z-index: 15;
+    transform: scale(1);
+    transition: 0.3s;
+}
+#prev{
+    left: 20px;
+}
+#next{
+    right: 20px;
+}
+#next:hover{
+  transform: scale(1.2);
+}
+#prev:hover{
+  transform: scale(1.2);
+}
+/* //circle */
 
-
-  
-
-  
+.circle{
+    pointer-events: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 14;
+    -webkit-mask: radial-gradient(var(--radius), transparent 100%, #000);
+    mask: radial-gradient(var(--radius), #0000 98%, #000);
+    backdrop-filter: blur(10px);
+    background: radial-gradient( 
+        calc(var(--radius) + 1px), #eee5 100%, #eee2
+    );
+    
+}
+.circle span{
+    display: block;
+    position: absolute;
+    height: calc(var(--radius) * 2 + 50px);
+    top: 50%;
+    left: 50%;
+    --rotate: 50deg;
+    transform: translate(-50%, -50%) rotate(var(--rotate));
+    text-transform: uppercase;
+    color: #fff;
+    font-size: small;
+    animation: circleRotate 20s linear infinite;
+}
+@keyframes circleRotate{
+    to{
+        transform: translate(-50%, -50%) rotate(calc(var(--rotate) + 360deg));
+    }
+}

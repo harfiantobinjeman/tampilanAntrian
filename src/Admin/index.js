@@ -87,12 +87,20 @@ const Admin = ()=>{
                             </div>
                         </div> 
                         <ul class="navbar-nav header-right">
+                            
                             {query.get("page")?<li class="nav-item" style={{marginRight:'30px'}}>
 								<div class="input-group search-area">
 									<input onChange={(e)=> setSearchTerm(e.target.value)} value={searchTerm} type="text" class="form-control" placeholder="Search here..." />
 									<span class="input-group-text"><a href=""><i class="flaticon-381-search-2"></i></a></span>
 								</div>
 							</li>:""}
+                            <li class="nav-item "  onClick={()=>{window.location="/pilihloket"}}>
+								<div href="" class="btn btn-primary d-sm-inline-block d-none nidzam-button" style={{letterSpacing:'1px',fontWeight:600,display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                    <FaPersonBooth style={{fontSize:'25px', fontWeight:600, marginRight:'5px', }}></FaPersonBooth>
+                                        Panggil Pasien
+                                
+                                    </div>
+							</li>
                             {query.get("page")?<li class="nav-item "  onClick={()=>{setShowModal(aa=>!aa)}}>
 								<div href="" class="btn btn-primary d-sm-inline-block d-none nidzam-button" style={{letterSpacing:'1px',fontWeight:600,display:'flex', justifyContent:'center', alignItems:'center'}}>
                                     <MdAdd style={{fontSize:'25px', fontWeight:600, marginRight:'5px', }}></MdAdd>
