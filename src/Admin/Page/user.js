@@ -6,6 +6,7 @@ import {FiEdit }from "react-icons/fi"
 import { MdClose, MdDangerous, MdEditSquare } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
 import { Tooltip } from 'react-tooltip';
+import { FaLock } from "react-icons/fa6";
 
 const UserPage = ({searchTerm,showModal, setShowModal})=>{
     const [token, setToken] = useState("")
@@ -33,9 +34,12 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     },[])
     const handleSaveCreate = ()=>{
         setLoading(true)
-       
+        let urls =`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user`
+        if(typeModal=="password"){
+            urls+="/change-password"
+        }
         axios({
-            url:`http://antrian-online.onrender.com/antrian/v1/admin/user`,
+            url:urls,
             data:{username:username,password:password,role:roleUuid,id:editId},
             method:typeModal=="edit"?"PUT":"POST",
             headers:{Authorization:"Bearer "+token}}
@@ -44,7 +48,10 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
                 if(typeModal=="edit"){
                     toast.success("Berhasil Edit User")
 
-                }else{
+                }else if(typeModal=="password"){
+                    toast.success("Berhasil Change Password User")
+                }
+                else{
                     toast.success("Berhasil Create User")
 
                 }
@@ -78,7 +85,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     },[totalData])
     useEffect(()=>{
         if(token){
-            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -96,7 +103,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
             })
 
             setDataRole([])
-            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then(res20=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/role/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then(res20=>{
                     
                     setDataRole(res20?.data?.data)
                    
@@ -121,7 +128,7 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
             setDataLoket([])
             const delayDebounceFn = setTimeout(() => {
               
-                axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                     if(res?.data?.data){
                         
                     
@@ -150,9 +157,9 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
     const handleActiveDeactive =  (id, status)=>{
         // alert(id,status)
         setLoading(true)
-        axios.post(`http://antrian-online.onrender.com/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data){
-               toast.success("Berhasil Update Status Loket")
+               toast.success("Berhasil Update Status User")
                setRefresh(aa=>!aa)
               
             }
@@ -175,18 +182,18 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
         
         <div className="content-body">
                 <div style={{display:'flex', justifyContent:'center',alignItems:'center',transition:'0.3s ease',position:'fixed', left:0, right:0, bottom:showModal?0:"100%", top:0, zIndex:6,marginTop:showModal?'0':'-10000px', background:'rgba(232, 235, 237,0.9)'}}>
-                    <div  style={{position:'relative',width:'310px', height:'360px',background:'#e8ebed', borderRadius:'25px',    boxShadow: "4px 4px 8px #bdc8d5, -4px -4px 8px #fff"}}>
-                            <div className="bg-info" style={{justifyContent:'space-between',letterSpacing:'2px',fontSize:'20px',fontWeight:'600',color:'white',boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", display:'flex',borderTopRightRadius:'25px',borderTopLeftRadius:'25px' ,alignItems:'center',padding:'10px 20px',width:'100%', height:'60px'}} onClick={()=>{setShowModal(aa=>!aa);setUsername("");
+                    <div  style={{position:'relative',width:'310px', height:typeModal=="password"?"215px":typeModal==""?"360px":'290px',background:'#e8ebed', borderRadius:'25px',    boxShadow: "4px 4px 8px #bdc8d5, -4px -4px 8px #fff"}}>
+                            <div className="bg-info" style={{justifyContent:'space-between',letterSpacing:'2px',fontSize:typeModal=="password"?"15px":'20px',fontWeight:'600',color:'white',boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", display:'flex',borderTopRightRadius:'25px',borderTopLeftRadius:'25px' ,alignItems:'center',padding:'10px 20px',width:'100%', height:'60px'}} onClick={()=>{setShowModal(aa=>!aa);setUsername("");
                setRoleUuid("");
                setPassword("");setTypeModal("")}}>
-                               {typeModal=="edit"?"EDIT":"CREATE"} USER
+                               {typeModal=="edit"?"EDIT USER":typeModal=="password"?"CHANGE PASSWORD":"CREATE USER"} 
                                 <div style={{cursor:'pointer'}} className="nidzam-button-close">
                                     <MdClose style={{fontSize:'30px', fontWeight:800}}></MdClose>
 
                                 </div>
                             </div>
                             <div className="input-fields" style={{display:'flex', justifyContent:'left',alignItems:'center',flexDirection:'column',marginTop:'23px'}}>
-                            <div class="text-input-group" style={{width:'260px'}}>
+                            {typeModal=="password"?"":<div class="text-input-group" style={{width:'260px'}}>
                                 <input 
                                 type="text" 
                                 value={username}
@@ -198,46 +205,50 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
                                 required="required"
                                 />
                                 <label for="firstName">Username</label>
-                                </div>
+                                </div>}
                                 <div style={{marginTop:'-15px'}}></div>
-                                <div class="text-input-group" style={{width:'260px'}}>
-                                <input 
+                                {typeModal=="" || typeModal=="password"?<div class="text-input-group" style={{width:'260px'}}>
+                                 <input 
                                 type="password" 
                                 value={password}
                                 onChange={(e)=>{setPassword(e.target.value)}}
                                 name="password" 
                                 id="password" 
-                                placeholder="Nama Loket" 
+                                placeholder="Password" 
                                 autocomplete="off"
                                 required="required"
                                 />
-                                <label for="password">Password</label>
-                                </div>
-                                <div style={{marginTop:'-15px'}}></div>
-                                <div class="text-input-group" style={{width:'260px'}}>
+
+                                <label for="password">Password</label> 
+                                </div>:""}
+                               <div style={{marginTop:'-15px'}}></div>
+                               {typeModal=="password"?"": <div class="text-input-group" style={{width:'260px'}}>
                                 <select 
                            
                               
                                 onChange={(e)=>{setRoleUuid(e.target.value)}}
                                 name="role" 
                                 id="role" 
-                                placeholder="Nama Loket" 
+                                placeholder="Role" 
                                 
                                 required="required"
                                 >
 
 <option >Choose Role...</option>
         {dataRole?.map((val,ind)=>{
-            return(
-                <option selected={val?.role_uuid==roleUuid} value={val?.role_uuid}>{val?.name}</option>
+            if(val?.status=="active"){
 
-            )
+                return(
+                    <option selected={val?.role_uuid==roleUuid} value={val?.role_uuid}>{val?.name}</option>
+    
+                )
+            }
         })}
        
                                     
                                 </select>
                                 <label for="role">Role</label>
-                                </div>
+                                </div>}
                             </div>
                             <div style={{position:'absolute',bottom:'20px',right:'20px',display:'flex', justifyContent:'end',marginTop:'20px', alignItems:'center'}}>
                                 <div className="btn btn-primary nidzam-button-save"  onClick={()=>{handleSaveCreate()}} style={{}}>Save</div>
@@ -324,10 +335,16 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
 <tr>
 													<td style={{padding:'0px'}}>
                                                        
-                                                 <FiEdit onClick={()=>{setShowModal(true);setTypeModal("edit");setEditId(val?.id);setUsername(val?.username);setPassword(val?.password);setRoleUuid(val?.role)}} style={{fontSize:'25px', cursor:'pointer',color:'gray'}}  data-tooltip-place="right" data-tooltip-id="my-tooltip"></FiEdit >
+                                                 <FiEdit onClick={()=>{setShowModal(true);setTypeModal("edit");setEditId(val?.id);setUsername(val?.username);setPassword("");setRoleUuid(val?.role)}} style={{fontSize:'25px', cursor:'pointer',color:'gray'}}  data-tooltip-place="right" data-tooltip-id="my-tooltip"></FiEdit >
                                         <Tooltip  id="my-tooltip">
   <div style={{display:'flex', alignItems:'start', justifyContent:'center',flexDirection:'column'}}>
           Edit Data                                              
+  </div>
+</Tooltip>
+<FaLock onClick={()=>{setShowModal(true);setTypeModal("password");setEditId(val?.id);setUsername("");setPassword("");setRoleUuid("")}} style={{marginLeft:'5px',fontSize:'25px', cursor:'pointer',color:'gray'}}  data-tooltip-place="right" data-tooltip-id="my-tooltip2"></FaLock >
+                                        <Tooltip  id="my-tooltip2">
+  <div style={{display:'flex', alignItems:'start', justifyContent:'center',flexDirection:'column'}}>
+          Change Passowrd                                              
   </div>
 </Tooltip>
 													</td>
@@ -336,20 +353,20 @@ const UserPage = ({searchTerm,showModal, setShowModal})=>{
 														{/* <span class="fs-14">Cashback</span> */}
 													</td>
                                                     <td style={{padding:'0px',textShadow:""}} >
-														<h6 class="fs-16 font-w600"  style={{color:'gray'}}>{dataRole?.findIndex(a=>a.role_uuid==val?.role)!=-1?dataRole[dataRole?.findIndex(a=>a.role_uuid=val?.role)]?.name:val.role }</h6>
+														<h6 class="fs-16 font-w600"  style={{color:'gray'}}>{dataRole?.find(a=>a.role_uuid==val?.role)?dataRole?.find(a=>a.role_uuid==val?.role)?.name:val.role }</h6>
 														{/* <span class="fs-14">Cashback</span> */}
 													</td>
 													<td style={{padding:'0px',textShadow:""}}>
 														<h6 class="fs-16  font-w600 mb-0" style={{color:'gray'}}>{val?.created_at?.split("T")[0]}</h6>
 														<span class="fs-14">{val?.created_at?.split("T")[1]?.split("Z")[0]}</span>
 													</td>
-													<td style={{textShadow:""}}><span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.findIndex(aa=>aa?.id==val?.created_by)!=-1?dataUser[dataUser?.findIndex(aa=>aa?.id==val?.created_by)]?.username:val?.created_by}</span></td>
+													<td style={{textShadow:""}}><span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.find(aa=>aa?.id==val?.created_by)?dataUser?.find(aa=>aa?.id==val?.created_by)?.username:""}</span></td>
                                                     <td style={{padding:'0px',textShadow:""}}>
 														<h6 class="fs-16 font-w600 mb-0"  style={{color:'gray'}}>{val?.updated_at?.split("T")[0]}</h6>
 														<span class="fs-14">{val?.updated_at?.split("T")[1]?.split("Z")[0]}</span>
 													</td>
 													<td style={{padding:'0px',textShadow:""}}>
-                                                    <span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.findIndex(aa=>aa?.id==val?.updated_by)!=-1?dataUser[dataUser?.findIndex(aa=>aa?.id==val?.updated_by)]?.username:val?.updated_by}</span>
+                                                    <span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.find(aa=>aa?.id==val?.updated_by)?dataUser?.find(aa=>aa?.id==val?.updated_by)?.username:""}</span>
                                                         </td>
                                                         <td style={{padding:'3px',textShadow:""}}>
 

@@ -22,6 +22,8 @@ import TipePasienPage from './Page/tipe_pasien';
 import { MdAdd, MdCreate, MdPlusOne } from 'react-icons/md';
 import { ToastContainer } from 'react-toastify';
 import UserPage from './Page/user';
+import axios from 'axios';
+import RolePage from './Page/role';
 
 
 const Admin = ()=>{
@@ -34,12 +36,26 @@ const Admin = ()=>{
     const [modalAddOpen, setModalAddOpen] = useState(false)
     const [profileOpen, setProfileOpen] = useState(false)
     const [showProfile,setShowProfile] = useState(false)
+    const [profileData, setProfileData] = useState({})
  const [searchTerm, setSearchTerm] = useState('')
    
     useEffect(()=>{
             if(!localStorage.getItem("token")){
                 window.location = `/login`
 
+            }else{
+                axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/profile`,{headers:{Authorization:"Bearer "+localStorage.getItem("token")}}).
+                then(res=>{
+                    setProfileData(res?.data?.data)
+                    if(res?.data?.data?.role!="849c9eee-e30f-4dc5-9816-9b395b0121b7"){
+                        window.location = "/pilihloket"
+                    }
+                })
+                .catch(err=>{
+                    window.location = `/login`
+                    setProfileData({})
+                })
+    
             }
         },[])
         
@@ -53,7 +69,7 @@ const Admin = ()=>{
             <a href="/admin" className="brand-logo">
 			
                 
-				<p className="brand-title" width="124px" height="33px"  style={{fontSize: "25px"}}>SuperAdmin</p>
+				<p className="brand-title" width="124px" height="33px"  style={{fontSize: "25px"}}>{profileData?.role_name?.toUpperCase()}</p>
             </a>
             <div onClick={()=>{setShowMenu(a=>!a)}} className="nav-control" style={{marginTop:'-5px'}}>
                 <div className={`hamburger ${showMenu?"is-active":""}`}>
@@ -67,7 +83,7 @@ const Admin = ()=>{
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left" style={{marginLeft:'-30px'}}>
 							<div class="dashboard_bar" >
-                                {query.get("page")?query.get("page")?.toUpperCase():"DASHBOARD"} 
+                                {query.get("page")?query.get("page")?.toUpperCase()?.replaceAll("_"," "):"DASHBOARD"} 
                             </div>
                         </div> 
                         <ul class="navbar-nav header-right">
@@ -113,9 +129,9 @@ const Admin = ()=>{
                                 <div   style={{cursor:'pointer',position:'relative',borderRadius:'50%',display:'flex',marginLeft:'25px',width:'calc(60px)',height:'60px',padding:'20px',justifyContent:'center',alignItems:'center',boxShadow:"-3px -3px 7px #ffffff73,3px 3px 5px rgba(94,104,121,0.288)"}}>
 
                                     <img onClick={()=>{setShowProfile(aa=>!aa)}} src={Man} className='img-profile' width="56" height={56} alt=""/>
-								<div className='bg-success' style={{transition:'0.3s ease',overflow:'hidden',position:'absolute', top:70, right:showProfile?0:"-1000px",borderRadius:'20px',padding:'20px', width:'200px'}}>
+								<div className='bg-success' style={{transition:'0.3s ease',overflow:'hidden',position:'absolute', top:70, right:showProfile?0:"-1000px",borderRadius:'20px',padding:'20px', width:'210px'}}>
                                     <div  style={{position:'absolute',borderRadius:'30px',left:"50px",top:'50px',transform:'rotate(60deg)',width:'100%',height:'100%',background:"linear-gradient(to right, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%)",filter:"progid:DXImageTransform.Microsoft.gradient( startColorstr='#26ffffff', endColorstr='#00ffffff',GradientType=1 )"}}></div>
-                                    <div style={{borderBottom:'2px solid white',color:'white',fontWeight:'600'}}>Hi, Nidzam Ganteng</div>
+                                    <div style={{borderBottom:'2px solid white',color:'white',fontWeight:'600'}}>Hi, {profileData?.username?.toUpperCase()}</div>
                                     <div onClick={()=>{localStorage.removeItem("token");window.location="/login"}} className='nidzam-button-save2' style={{cursor:'pointer',color:'white',width:'100%', textAlign:'left', fontWeight:'600',marginTop:'10px'}}>Logout</div>
 
                                 </div>
@@ -176,6 +192,10 @@ const Admin = ()=>{
         {!query.get("page")?<Dashboard></Dashboard>:""}
         {query.get("page")=="loket"?<Loket showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></Loket>:""}
         {query.get("page")=="user"?<UserPage showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></UserPage>:""}
+        {query.get("page")=="tipe_pasien"?<TipePasienPage showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></TipePasienPage>:""}
+        {query.get("page")=="role"?<RolePage showModal={showModal} setShowModal={setShowModal} searchTerm={searchTerm}></RolePage>:""}
+
+
 
 
                    

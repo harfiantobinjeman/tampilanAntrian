@@ -63,13 +63,22 @@ const Login = () => {
   const [loading, setLoading] = React.useState(false)
   React.useEffect(()=>{
     if(localStorage.getItem("token")){
-      window.location = "/operator";
+      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/profile`,{headers:{Authorization:"Bearer "+localStorage.getItem("token")}}).
+      then(res=>{
+        if(res?.data?.data?.role=="849c9eee-e30f-4dc5-9816-9b395b0121b7"){
+          window.location = "/admin";
+        }else{
+          window.location = "/pilihloket";
+
+        }
+      })
+      
     }
   },[])
   const handleLogin = ()=>{
     setLoading(true)
   
-    axios.post("https://antrian-online.onrender.com/antrian/v1/admin/user/login",
+    axios.post(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/login`,
     {
       username:username,
       password:password,

@@ -4,7 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Button from '@mui/material/Button';
 
 // import useSWR from "swr";
-let socket2 = new WebSocket("ws://antrian-online.onrender.com/antrian/v1/loket/user-id")
+let socket2 = new WebSocket(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL_WS}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/user-id`)
 const OperatorList = ()=>{
     const [data,setData] = useState([])
     const [fetchLagi, setFetchLagi] = useState(false)
@@ -37,7 +37,7 @@ const OperatorList = ()=>{
         if(token && loketId){
            
         
-        socket2 = new WebSocket(`wss://antrian-online.onrender.com/antrian/v1/loket/user-id?loket_id=${loketId}&token=${token}`);
+        socket2 = new WebSocket(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL_WS}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/user-id?loket_id=${loketId}&token=${token}`);
 
         socket2.onopen = () => {
                 console.log('WebSocket connection established');
@@ -75,7 +75,7 @@ const OperatorList = ()=>{
         
         setData([])
         if(token){
-            axios.get('https://antrian-online.onrender.com/antrian/v1/antrian/list',{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/antrian/list`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
             if(res?.data?.data){
                 console.log(res?.data?.data)
                 setData(()=>res?.data?.data)

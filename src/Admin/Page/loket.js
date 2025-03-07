@@ -29,7 +29,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
         setLoading(true)
        
         axios({
-            url:`http://antrian-online.onrender.com/antrian/v1/admin/loket`,
+            url:`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket`,
             data:{name:nameLoket,id:editId},
             method:typeModal=="edit"?"PUT":"POST",
             headers:{Authorization:"Bearer "+token}}
@@ -70,7 +70,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
     },[totalData])
     useEffect(()=>{
         if(token){
-            axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/list?page=1&row_perpage=1000000`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -97,7 +97,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
             setDataLoket([])
             const delayDebounceFn = setTimeout(() => {
               
-                axios.get(`http://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=${currentPage}&row_perpage=${rowPerPage}&name=${searchTerm}`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                     if(res?.data?.data){
                         
                     
@@ -126,7 +126,7 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
     const handleActiveDeactive =  (id, status)=>{
         // alert(id,status)
         setLoading(true)
-        axios.post(`http://antrian-online.onrender.com/antrian/v1/admin/loket/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/${status=="active"?"deactivate":"activate"}`,{id:id},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
             if(res?.data){
                toast.success("Berhasil Update Status Loket")
                setRefresh(aa=>!aa)
@@ -270,13 +270,13 @@ const Loket = ({searchTerm,showModal, setShowModal})=>{
 														<h6 class="fs-16  font-w600 mb-0" style={{color:'gray'}}>{val?.created_at?.split("T")[0]}</h6>
 														<span class="fs-14">{val?.created_at?.split("T")[1]?.split("Z")[0]}</span>
 													</td>
-													<td style={{textShadow:""}}><span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.findIndex(aa=>aa?.id==val?.created_by)!=-1?dataUser[dataUser?.findIndex(aa=>aa?.id==val?.created_by)]?.username:val?.created_by}</span></td>
+													<td style={{textShadow:""}}><span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.find(aa=>aa?.id==val?.created_by)?dataUser?.find(aa=>aa?.id==val?.created_by)?.username:""}</span></td>
                                                     <td style={{padding:'0px',textShadow:""}}>
 														<h6 class="fs-16 font-w600 mb-0"  style={{color:'gray'}}>{val?.updated_at?.split("T")[0]}</h6>
 														<span class="fs-14">{val?.updated_at?.split("T")[1]?.split("Z")[0]}</span>
 													</td>
 													<td style={{padding:'0px',textShadow:""}}>
-                                                    <span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.findIndex(aa=>aa?.id==val?.updated_by)!=-1?dataUser[dataUser?.findIndex(aa=>aa?.id==val?.updated_by)]?.username:val?.updated_by}</span>
+                                                    <span class="fs-16  font-w600"  style={{color:'gray'}}>{dataUser?.find(aa=>aa?.id==val?.updated_by)?dataUser?.find(aa=>aa?.id==val?.updated_by)?.username:""}</span>
                                                         </td>
                                                         <td style={{padding:'3px',textShadow:""}}>
 

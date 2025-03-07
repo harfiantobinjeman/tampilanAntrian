@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import axios from 'axios';
 
-const socket3 = new WebSocket('wss://antrian-online.onrender.com/antrian/v1/loket/user-id');
+const socket3 = new WebSocket(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL_WS}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/user-id`);
 
 
 const cards = [
@@ -254,14 +254,14 @@ const Panggil = () => {
         
         
     React.useEffect(()=>{
-      axios.get("https://antrian-online.onrender.com/antrian/v1/loket/list-data?row_perpage=3").then(res=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list-data?row_perpage=3`).then(res=>{
         setData(res?.data?.data)
       });
     },[fetchLagi])
   
     React.useEffect(()=>{
       if(token){
-      axios.get("https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=10",{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=10`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
       //  console.log(res?.data?.data)
         setDataMaster(res?.data?.data)
       });

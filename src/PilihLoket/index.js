@@ -12,7 +12,7 @@ import { PacmanLoader, SyncLoader } from "react-spinners";
 
 
 const PilihLoket = ()=>{
-    let socket2 = new WebSocket("wss://antrian-online.onrender.com/antrian/v1/loket/user-id")
+    let socket2 = new WebSocket(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL_WS}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/user-id`)
     const [dataLoket, setDataLoket] = useState([])
     const [token,setToken] = useState("")
     const [fetchLagi, setFetchLagi] = useState(false)
@@ -50,7 +50,7 @@ const PilihLoket = ()=>{
     useEffect(()=>{
         if(token){
             setDataLoket([])
-            axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -69,7 +69,7 @@ const PilihLoket = ()=>{
             })
 
             setProfile({})
-            axios.get(`https://antrian-online.onrender.com/antrian/v1/admin/user/profile`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/profile`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
                 if(res?.data?.data){
                     
                 
@@ -92,7 +92,7 @@ const PilihLoket = ()=>{
     },[token,fetchLagi])
     const handleSavePassword = ()=>{
         setLoading(true)
-        axios.post(`https://antrian-online.onrender.com/antrian/v1/admin/user/change-password`,{password:password,id:jwtDecode(token)?.sub?parseInt(jwtDecode(token)?.sub):0},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/change-password`,{password:password,id:jwtDecode(token)?.sub?parseInt(jwtDecode(token)?.sub):0},{headers:{Authorization:"Bearer "+token}}).then((res)=>{
            
                 
                 setPassword('')
@@ -119,7 +119,7 @@ const PilihLoket = ()=>{
     return(
         <div className="bg-glass" style={{overflow:'hidden',width:'100vw', height:'100vh', padding:'0px'}}>
             <div style={{display:'flex',transition:'0.3s ease-in-out',justifyContent:'center',alignItems:'center',zIndex:4,position:'fixed', top:showpassword?0:-100000000, left:0, bottom:0, right:0, background:'rgba(0,0,0,0.5)', backdropFilter:'blur(20px)'}}>
-            {loading?<SyncLoader color="white" size={"30px"} style={{color:'white',fontSize:'50px'}}></SyncLoader>:<div style={{borderRadius:'20px',background:'rgba(0,0,0,0.25)', backdropFilter:'blur(25px)', width:'300px', height:'230px'}}>
+            {loading?<SyncLoader color="white" size={"30px"} style={{color:'white',fontSize:'50px'}}></SyncLoader>:<div style={{borderRadius:'20px',background:'rgba(255,255,255,.25)', backdropFilter:'blur(25px)', width:'300px', height:'230px'}}>
                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'20px 20px'}}>
                         <div style={{color:'white',fontWeight:600, fontSize:'18px'}}>CHANGE PASSWORD</div>
                         <MdClose onClick={()=>{setshowPassword(false);setPassword("")}} className="nidzam-button-close" style={{fontSize:'30px', color:'white'}}></MdClose>
