@@ -276,7 +276,7 @@ const Panggil = () => {
   
   return (
     <div style={{ display:'flex', flexWrap:'wrap', width:'100%' }}>
-      {/* {data.map((card, index) => ( */}
+      {/*  {dataMaster?.map((panggilans, index)=>( */}
       {cards.map((card, index) => (
           <Card sx={{
             width:'30%',
@@ -321,6 +321,9 @@ const Panggil = () => {
                 <Typography className='Monitor-wrapper' sx={{
                   fontSize:'80px', color:'black'}}>
                   {card.noAntrian}
+                  {/* {data?.length && data?.findIndex(aa=>aa.name==panggilans.name)!=-1?
+                  ("("+data[data.findIndex(aa=>aa.name==panggilans.name)].tipe_pasien_name+") " + 
+                  data[data.findIndex(aa=>aa.name==panggilans.name)].number):""} */}
                 </Typography>
               </CardContent>
             </CardActionArea>

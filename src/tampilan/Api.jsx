@@ -134,7 +134,7 @@ console.log(data, dataMaster)
       </Box>
       <Box sx={{ width:'30%',bgcolor:'purple' }}>
       {cards.map((card, index) => (
-        // {data.map((card, index) => (
+        // {dataMaster?.map((panggilans, index)=>(
           <Card sx={{
             width:'90%',
             margin:'10px',
@@ -174,6 +174,9 @@ console.log(data, dataMaster)
                 <Typography className='Monitor-wrapper' sx={{
                   fontSize:'80px', color:'black'}}>
                   {card.noAntrian}
+                  {/* {data?.length && data?.findIndex(aa=>aa.name==panggilans.name)!=-1?
+                  ("("+data[data.findIndex(aa=>aa.name==panggilans.name)].tipe_pasien_name+") " + 
+                  data[data.findIndex(aa=>aa.name==panggilans.name)].number):""} */}
                 </Typography>
                 {/* <CardMedia
                   component="audio"
