@@ -3,6 +3,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
+import axios from 'axios';
+
+const socket3 = new WebSocket('wss://antrian-online.onrender.com/antrian/v1/loket/user-id');
+
 
 const cards = [
   {
@@ -223,8 +227,56 @@ const Panggil = () => {
           })
     })
   }
+
+  const [data, setData] = React.useState([])
+    const [token, setToken] = React.useState("")
+    React.useEffect(()=>{
+      setToken(localStorage.getItem("token"))
+    },[])
+    const [dataMaster, setDataMaster] = React.useState([])
+  
+     const [fetchLagi, setFetchLagi] = React.useState(false)
+        
+     
+            socket3.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+            socket3.onopen = () => {
+              console.log('WebSocket connection open');
+          };
+            socket3.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                console.log('Real-time update:', data);
+                if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
+                    setFetchLagi(!fetchLagi)
+                }
+            };
+        
+        
+    React.useEffect(()=>{
+      axios.get("https://antrian-online.onrender.com/antrian/v1/loket/list-data?row_perpage=3").then(res=>{
+        setData(res?.data?.data)
+      });
+    },[fetchLagi])
+  
+    React.useEffect(()=>{
+      if(token){
+      axios.get("https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=10",{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+      //  console.log(res?.data?.data)
+        setDataMaster(res?.data?.data)
+      });
+    }
+    },[token])
+     
+  
+  console.log(data, dataMaster)
+    if (!dataMaster?.length) {
+        return <h2>loading ..... ....... ......</h2>
+    }
+  
   return (
     <div style={{ display:'flex', flexWrap:'wrap', width:'100%' }}>
+      {/* {data.map((card, index) => ( */}
       {cards.map((card, index) => (
           <Card sx={{
             width:'30%',

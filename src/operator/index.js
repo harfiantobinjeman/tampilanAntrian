@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
+import Button from '@mui/material/Button';
+
 // import useSWR from "swr";
 let socket2 = new WebSocket("ws://antrian-online.onrender.com/antrian/v1/loket/user-id")
 const OperatorList = ()=>{
@@ -105,8 +107,69 @@ const OperatorList = ()=>{
 
     return(
     <>
+
         <header className="App-header">
-            {!boleh?<div style={{position:'fixed', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.5)'}}></div>:""}
+            {boleh?<div style={{position:'fixed', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.5)'}}></div>:""}
+            <button onClick={()=>{localStorage.removeItem("token"); window.location = "/login";}}>Logout</button>
+          
+            <h4 style={{ marginTop:"0px"}}>Pilih Panggil Loket {loketId}</h4>
+            <div style={{margin:'20px', borderRadius:'30px',width:"calc(100vw - 100px)", height:'calc(100vh - 100px)', background:"rgba(232, 235, 237, 0.3)", backdropFilter:'blur(4px)', border:'2px solid rgba(255,255,255,0.8)'}}>
+                    <div style={{minHeight:'100vh', display:'flex', justifyContent:'center', alignContent:'center', flexDirection:'column'}}>
+                    <div className="Karcis-container" >
+                    {data?.length && data?.map((antrians, index)=>(
+                        <div class="col-xl-4 col-xxl-4 col-sm-12 col-m-12">
+                            <div class="card nidzam invoice-card" style={{marginLeft:'30px',}}>
+                                <div class="card-body d-flex" style={{justifyContent:'center'}}>
+                                    <div key={antrians.id} style={{textShadow:"-3px -3px 7px #ffffff73,  3px 3px 5px rgba(94,104,121,0.288)",}}>
+                                        <h1 class="" style={{color:'rgba(0,0,0,0.7)', fontWeight:1000,WebkitTextStroke:'2px  rgba(255,255,255,0.5)'}}>{antrians.tipe_pasien_name}</h1>
+                                        {/* <span class="text-white fs-18">User Aktif</span> */}
+                                        <h1 class="" style={{color:'rgba(0,0,0,0.7)', fontWeight:1000,WebkitTextStroke:'2px  rgba(255,255,255,0.5)'}}>{antrians.number}</h1>
+                                        <h3 className="Karcis-tittle">Sisa : {antrians.count}</h3>
+
+                                        <Button variant="contained"  disabled={(antrians.loket_id===loketId && onPanggil) || (antrians.loket_id!==loketId && onPanggil) } onClick={()=>{
+                                            socket2.send(JSON.stringify({
+                                                "type":"call",
+                                                "body":{
+                                                    "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "id":antrians.id,
+                                                    "loket_id":loketId, 
+                                                }
+                                            }))
+                                        }}>Panggil</Button>
+                                        <Button variant="contained"  disabled={(antrians.loket_id===loketId && onPanggil) || (antrians.loket_id!==loketId && onPanggil) } onClick={()=>{
+                                            socket2.send(JSON.stringify({
+                                                "type":"call",
+                                                "body":{
+                                                    "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "id":antrians.id,
+                                                    "loket_id":loketId, 
+                                                }
+                                            }))
+                                        }}>Panggil lagi</Button>
+                                        <Button variant="contained" disabled={ (antrians.loket_id!==loketId && onPanggil) || !onPanggil }  onClick={()=>{
+                                            socket2.send(JSON.stringify({
+                                                "type":"selesai",
+                                                "body":{
+                                                    "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "id":antrians.id,
+                                                    "loket_id":loketId, 
+                                                }
+                                            }))
+                                        }}>Selesai</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                    </div>
+        </header>
+
+
+        {/* ni header yang lama
+        <header className="App-header">
+            {boleh?<div style={{position:'fixed', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.5)'}}></div>:""}
             <button onClick={()=>{localStorage.removeItem("token"); window.location = "/login";}}>Logout</button>
           
             <h4 style={{ marginTop:"0px",marginBottom:"40px" }}>Pilih Panggil Loket {loketId}</h4>
@@ -145,7 +208,7 @@ const OperatorList = ()=>{
                 
             </div>
             <ToastContainer></ToastContainer>
-        </header>
+        </header> */}
     </>
     )
 }

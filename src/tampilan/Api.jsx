@@ -7,7 +7,11 @@ import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import Panggil from './Card';
 import Button from '@mui/material/Button';
-import manual from './manual.json'
+import manual from './manual.json';
+import axios from 'axios';
+
+const socket3 = new WebSocket('wss://antrian-online.onrender.com/antrian/v1/loket/user-id');
+
 
 const cards = [
   {
@@ -64,6 +68,53 @@ export default function Tampilan() {
     })
   }
 
+  const [data, setData] = React.useState([])
+  const [token, setToken] = React.useState("")
+  React.useEffect(()=>{
+    setToken(localStorage.getItem("token"))
+  },[])
+  const [dataMaster, setDataMaster] = React.useState([])
+
+   const [fetchLagi, setFetchLagi] = React.useState(false)
+      
+   
+          socket3.onclose = () => {
+              console.log('WebSocket connection closed');
+          };
+          socket3.onopen = () => {
+            console.log('WebSocket connection open');
+        };
+          socket3.onmessage = (event) => {
+              const data = JSON.parse(event.data);
+              console.log('Real-time update:', data);
+              if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
+                  setFetchLagi(!fetchLagi)
+              }
+          };
+      
+      
+  React.useEffect(()=>{
+    axios.get("https://antrian-online.onrender.com/antrian/v1/loket/list-data?row_perpage=3").then(res=>{
+      setData(res?.data?.data)
+    });
+  },[fetchLagi])
+
+  React.useEffect(()=>{
+    if(token){
+    axios.get("https://antrian-online.onrender.com/antrian/v1/admin/loket/list?page=1&row_perpage=10",{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+    //  console.log(res?.data?.data)
+      setDataMaster(res?.data?.data)
+    });
+  }
+  },[token])
+   
+
+console.log(data, dataMaster)
+  if (!dataMaster?.length) {
+      return <h2>loading ..... ....... ......</h2>
+  }
+
+
   return (
     <div style={{ display:'flex', width:'100%',backgroundColor:'purple',alignContent:'center',height:'10000px'}}>
       <Box sx={{ width:'70%',bgcolor:'purple', margin:'10px' }}>
@@ -82,19 +133,20 @@ export default function Tampilan() {
         <Panggil />
       </Box>
       <Box sx={{ width:'30%',bgcolor:'purple' }}>
-        {cards.map((card, index) => (
+      {cards.map((card, index) => (
+        // {data.map((card, index) => (
           <Card sx={{
             width:'90%',
             margin:'10px',
             height:'190px',
             border:"4px solid #AD88C6"}}>
             <CardActionArea
-              onClick={() => 
-                (start(
-                  card.antrian,
-                  card.noAntrian,
-                  card.title))
-              }
+            onClick={() => 
+              (start(
+                card.antrian,
+                card.noAntrian,
+                card.title))
+            }
               sx={{
                 height: '100%',
                   backgroundColor: 'action.selected',
