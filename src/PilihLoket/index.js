@@ -194,7 +194,7 @@ const PilihLoket = ()=>{
                                             toast.error("Loket sudah di pilih")
                                         }else{
                                             localStorage.setItem("loket_id",val?.id)
-                                            window.location = `/operator`
+                                            window.location = `/operator?loket_name=${val.name}`
 
                                         }
                                     }} className="parent-loket card-loket3" style={{filter:val?.user_id?" hue-rotate(120deg)":" sepia(100%)  hue-rotate(120deg)"}}>

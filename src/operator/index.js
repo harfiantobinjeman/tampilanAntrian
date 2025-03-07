@@ -12,6 +12,7 @@ const OperatorList = ()=>{
     const [token,setToken] = useState("")
     const [loketId,setLoketId] = useState(0)
     const [boleh, setBoleh] = useState(false)
+   
     const query = new URLSearchParams(window.location.search);
     useEffect(()=>{
         setData([])
@@ -109,10 +110,12 @@ const OperatorList = ()=>{
     <>
 
         <header className="App-header">
-            {boleh?<div style={{position:'fixed', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.5)'}}></div>:""}
+            {!boleh?<div style={{position:'fixed',display:'flex', justifyContent:'center',alignItems:'center', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.5)'}}>
+                Loading.....
+            </div>:""}
             <button onClick={()=>{localStorage.removeItem("token"); window.location = "/login";}}>Logout</button>
           
-            <h4 style={{ marginTop:"0px"}}>Pilih Panggil Loket {loketId}</h4>
+            <h4 style={{ marginTop:"0px"}}>Pilih Panggil Loket {query.get("loket_name")}</h4>
             <div style={{margin:'20px', borderRadius:'30px',width:"calc(100vw - 100px)", height:'calc(100vh - 100px)', background:"rgba(232, 235, 237, 0.3)", backdropFilter:'blur(4px)', border:'2px solid rgba(255,255,255,0.8)'}}>
                     <div style={{minHeight:'100vh', display:'flex', justifyContent:'center', alignContent:'center', flexDirection:'column'}}>
                     <div className="Karcis-container" >

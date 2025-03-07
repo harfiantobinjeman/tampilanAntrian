@@ -94,14 +94,14 @@ export default function Tampilan() {
       
       
   React.useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list-data?row_perpage=3`).then(res=>{
+    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list?row_perpage=3`).then(res=>{
       setData(res?.data?.data)
     });
   },[fetchLagi])
 
   React.useEffect(()=>{
     if(token){
-    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=10`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
+    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list-data?page=1&row_perpage=10`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
     //  console.log(res?.data?.data)
       setDataMaster(res?.data?.data)
     });
