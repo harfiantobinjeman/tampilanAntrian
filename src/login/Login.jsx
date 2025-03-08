@@ -71,6 +71,8 @@ const Login = () => {
           window.location = "/pilihloket";
 
         }
+      }).catch(()=>{
+       
       })
       
     }

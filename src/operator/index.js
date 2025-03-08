@@ -188,6 +188,8 @@ const OperatorList = ()=>{
             <div style={{display:'flex',transition:'0.3s ease-in-out',justifyContent:'center',alignItems:'center',zIndex:4,position:'fixed', top:showpassword?0:-100000000, left:0, bottom:0, right:0, background:'rgba(0,0,0,0.5)', backdropFilter:'blur(20px)'}}>
              {loading?<SyncLoader color="white" size={"30px"} style={{color:'white',fontSize:'50px'}}></SyncLoader>:<div style={{borderRadius:'20px',background:'rgba(255,255,255,.25)', backdropFilter:'blur(25px)', width:'300px', height:'230px'}}>
                     <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', padding:'20px 20px'}}>
+                        
+                         
                          <div style={{color:'white',fontWeight:600, fontSize:'18px'}}>CHANGE PASSWORD</div>
                          <MdClose onClick={()=>{setshowPassword(false);setPassword("")}} className="nidzam-button-close" style={{fontSize:'30px', color:'white'}}></MdClose>
                      </div>
@@ -233,11 +235,13 @@ const OperatorList = ()=>{
                                    <div style={{position:'absolute', right:'35px'}}>
                                        
                                        <img onClick={()=>{setShowProfile(a=>!a)}} style={{height:'50px',cursor:'pointer',borderRadius:'50%',boxShadow:" rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px"}} src={Profile} />
-                               <div style={{right:showProfile?0:-1000,padding:'0px 15px',width:'auto',minWidth:'250px',transition:'0.3s ease-in-out',top:60,position:"absolute", background:'rgba(0,0,0,0.5)',backdropFilter:'blur(25px)', height:'160px',borderRadius:'10px', }}>
+                               <div style={{right:showProfile?0:-1000,padding:'0px 15px',width:'auto',minWidth:'250px',transition:'0.3s ease-in-out',top:60,position:"absolute", background:'rgba(0,0,0,0.5)',backdropFilter:'blur(25px)', height:'180px',borderRadius:'10px', }}>
                                    <div style={{color:'white',marginTop:'20px',width:'auto',padding:'0px 0px',marginBottom:'20px',borderBottom:'2px solid white', marginLeft:'10px', marginRight:'10px'}}>
                                        <h4 style={{color:'rgba(255,255,255,0.8)',fontWeight:700}}>Hi, {profile?.username}</h4>
                                    </div>
-                                   <div onClick={()=>{setshowPassword(true);setShowProfile(false)}} className="nidzam-button-save2" style={{transition:'0.3s ease-in-out',textAlign:'left',paddingLeft:'25px', color:'white',fontSize:'18px'}}>Change Password</div>
+                                   <div onClick={()=>{setshowPassword(true);setShowProfile(false);window.location="/pilihloket"}} className="nidzam-button-save2" style={{transition:'0.3s ease-in-out',textAlign:'left',paddingLeft:'25px', color:'white',fontSize:'18px'}}>Pilih Loket</div>
+
+                                   <div onClick={()=>{setshowPassword(true);setShowProfile(false)}} className="nidzam-button-save2" style={{transition:'0.3s ease-in-out',textAlign:'left',paddingLeft:'25px', color:'white',fontSize:'18px',marginTop:'10px',}}>Change Password</div>
                                    <div onClick={()=>{localStorage.removeItem("token");window.location="/login"}} className="nidzam-button-save2" style={{transition:'0.3s ease-in-out',textAlign:'left',paddingLeft:'25px',marginTop:'10px', color:'white'}}>Logout</div>
            
                                </div>
@@ -277,7 +281,11 @@ const OperatorList = ()=>{
                                             socket2.send(JSON.stringify({
                                                 "type":"call",
                                                 "body":{
+                                                    "number":antrians.number,
+                                                    "loket_name":query.get("loket_name"),
+                                                    "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "tipe_pasien_code":antrians.tipe_pasien_code,
                                                     "id":antrians.id,
                                                     "loket_id":loketId, 
                                                 }
@@ -295,7 +303,9 @@ const OperatorList = ()=>{
                                             socket2.send(JSON.stringify({
                                                 "type":"call",
                                                 "body":{
+                                                    "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "tipe_pasien_code":antrians.tipe_pasien_code,
                                                     "id":antrians.id,
                                                     "loket_id":loketId, 
                                                 }
@@ -356,7 +366,11 @@ const OperatorList = ()=>{
                                             socket2.send(JSON.stringify({
                                                 "type":"call",
                                                 "body":{
+                                                    "number":antrians.number,
+                                                    "loket_name":query.get("loket_name"),
+                                                    "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "tipe_pasien_code":antrians.tipe_pasien_code,
                                                     "id":antrians.id,
                                                     "loket_id":loketId, 
                                                 }
@@ -374,7 +388,9 @@ const OperatorList = ()=>{
                                             socket2.send(JSON.stringify({
                                                 "type":"call",
                                                 "body":{
+                                                    "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
+                                                    "tipe_pasien_code":antrians.tipe_pasien_code,
                                                     "id":antrians.id,
                                                     "loket_id":loketId, 
                                                 }

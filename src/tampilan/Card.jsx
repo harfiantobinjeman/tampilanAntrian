@@ -1,9 +1,10 @@
-import * as React from 'react';
+import React,{useEffect} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CardActionArea from '@mui/material/CardActionArea';
 import axios from 'axios';
+
 
 const socket3 = new WebSocket(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL_WS}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/user-id`);
 
@@ -230,46 +231,45 @@ const Panggil = () => {
 
   const [data, setData] = React.useState([])
     const [token, setToken] = React.useState("")
-    React.useEffect(()=>{
-      setToken(localStorage.getItem("token"))
-    },[])
     const [dataMaster, setDataMaster] = React.useState([])
   
      const [fetchLagi, setFetchLagi] = React.useState(false)
-        
+         axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list-data?page=1&row_perpage=10000`).then(res=>{
+          console.log(res?.data?.data)
+           setDataMaster(res?.data?.data)
+         });
+
+
+
+         
+     useEffect(()=>{
+      socket3.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+      socket3.onopen = () => {
+        console.log('WebSocket connection open');
+    };
+      socket3.onmessage = (event) => {
+          const data = JSON.parse(event.data);
+          console.log('Real-time update:', data);
+          if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
+              setFetchLagi(!fetchLagi)
+          }
+      };
+  
+     },[])
      
-            socket3.onclose = () => {
-                console.log('WebSocket connection closed');
-            };
-            socket3.onopen = () => {
-              console.log('WebSocket connection open');
-          };
-            socket3.onmessage = (event) => {
-                const data = JSON.parse(event.data);
-                console.log('Real-time update:', data);
-                if(data.type==="selesai" || data.type==="panggil" || data.type==="insert-antrian"){
-                    setFetchLagi(!fetchLagi)
-                }
-            };
+            
         
-        
-    React.useEffect(()=>{
-      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list-data?row_perpage=3`).then(res=>{
+    useEffect(()=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list?row_perpage=3`).then(res=>{
         setData(res?.data?.data)
       });
     },[fetchLagi])
   
-    React.useEffect(()=>{
-      if(token){
-      axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=10`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
-      //  console.log(res?.data?.data)
-        setDataMaster(res?.data?.data)
-      });
-    }
-    },[token])
      
   
-  console.log(data, dataMaster)
+  // console.log(data, dataMaster)
     if (!dataMaster?.length) {
         return <h2>loading ..... ....... ......</h2>
     }
@@ -320,10 +320,10 @@ const Panggil = () => {
                 </Typography>
                 <Typography className='Monitor-wrapper' sx={{
                   fontSize:'80px', color:'black'}}>
-                  {card.noAntrian}
-                  {/* {data?.length && data?.findIndex(aa=>aa.name==panggilans.name)!=-1?
-                  ("("+data[data.findIndex(aa=>aa.name==panggilans.name)].tipe_pasien_name+") " + 
-                  data[data.findIndex(aa=>aa.name==panggilans.name)].number):""} */}
+                  {/* {card.noAntrian} */}
+                  {data?.length && data?.findIndex(aa=>aa.name==card.name)!=-1?
+                  ("("+data[data.findIndex(aa=>aa.name==card.name)].tipe_pasien_name+") " + 
+                  data[data.findIndex(aa=>aa.name==card.name)].number):""}
                 </Typography>
               </CardContent>
             </CardActionArea>
