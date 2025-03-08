@@ -379,7 +379,7 @@ textCircle.forEach((value, key) => {
                                
                                 if(val?.user_id ){
                                     toast.error("Loket sudah di pilih")
-                                }else if(document?.getElementById("beb"+val?.id+"")?.classList?.contains("active")){
+                                }else{
                                             localStorage.setItem("loket_id",val?.id)
                                             window.location = `/operator?loket_name=${val.name}`
 

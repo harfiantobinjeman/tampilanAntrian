@@ -81,8 +81,8 @@ const Admin = ()=>{
             <div class="header-content">
                 <nav class="navbar navbar-expand" >
                     <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left" style={{marginLeft:'-30px'}}>
-							<div class="dashboard_bar" >
+                        <div class="header-left" style={{marginLeft:'-40px'}}>
+							<div class="dashboard_bar" style={{fontSize:query.get("page")=="tipe_pasien"?"30px":"35px"}} >
                                 {query.get("page")?query.get("page")?.toUpperCase()?.replaceAll("_"," "):"DASHBOARD"} 
                             </div>
                         </div> 
