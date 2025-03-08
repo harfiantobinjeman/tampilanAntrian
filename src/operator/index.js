@@ -301,8 +301,10 @@ const OperatorList = ()=>{
     },
   }}   disabled={ (antrians.loket_id!==loketId && onPanggil) || !onPanggil  } onClick={()=>{
                                             socket2.send(JSON.stringify({
-                                                "type":"call",
+                                                "type":"recall",
                                                 "body":{
+                                                   "number":antrians.number,
+                                                    "loket_name":query.get("loket_name"),
                                                     "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
                                                     "tipe_pasien_code":antrians.tipe_pasien_code,
@@ -386,8 +388,10 @@ const OperatorList = ()=>{
     },
   }}  disabled={ (antrians.loket_id!==loketId && onPanggil) || !onPanggil }  onClick={()=>{
                                             socket2.send(JSON.stringify({
-                                                "type":"call",
+                                                "type":"recall",
                                                 "body":{
+                                                   "number":antrians.number,
+                                                    "loket_name":query.get("loket_name"),
                                                     "tipe_pasien_name":antrians.tipe_pasien_name,
                                                     "tipe_pasien_id":antrians.tipe_pasien_id,
                                                     "tipe_pasien_code":antrians.tipe_pasien_code,
