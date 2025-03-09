@@ -1,5 +1,5 @@
 .bg-glass{
-  background-image: url('https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260');
+  background-image: url('./../images/pexels-photo-2339009.jpg');
 
     background-size: cover;
     background-position: center center;
@@ -65,7 +65,7 @@
     padding-top: 100px;
     height: 300px;
     transform-style: preserve-3d;
-    background-image: url("https://images.pexels.com/photos/1629236/pexels-photo-1629236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    background-image: url("./../images/pexels-photo-1629236.jpeg");
     background-position: center center;
     
     transition: all 0.5s ease-in-out;
