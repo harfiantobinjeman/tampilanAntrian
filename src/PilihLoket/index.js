@@ -5,12 +5,11 @@ import Profile from './../images/man.png'
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
-import gsap from "gsap";
 import { MdClose } from "react-icons/md";
 import { jwtDecode } from "jwt-decode";
 import { PacmanLoader, SyncLoader } from "react-spinners";
 
-import { AnimatePresence, motion } from "framer-motion";
+
 import Image1 from './../images/control-img-1.png'
 import Image2 from './../images/control-img-2.png'
 import Image3 from './../images/control-img-3.png'
