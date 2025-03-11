@@ -98,12 +98,21 @@ const OperatorList = ()=>{
                
                 setFetchLagi((y)=>!y)
             }
-            if(data.message=="loket sudah di pakai"){
-                toast.error("error, loket sudah di pakai")
-                localStorage.removeItem("loket_id")
-                setTimeout(()=>{
-                    window.location="/pilihloket"
-                },2000)
+            if(data?.status=="error"){
+                
+                if(data.message=="loket sudah di pakai"){
+                    toast.error("error, loket sudah di pakai")
+                    localStorage.removeItem("loket_id")
+                    setTimeout(()=>{
+                        window.location="/pilihloket"
+                    },3000)
+                }else{
+                    toast.error(data?.message)
+                    localStorage.removeItem("loket_id")
+                    setTimeout(()=>{
+                        window.location="/pilihloket"
+                    },3000) 
+                }
             }
             if(data?.id==loketId && data?.username=="boleh"){
                 setBoleh(true)
@@ -114,17 +123,27 @@ const OperatorList = ()=>{
     
 
     useEffect(()=>{
-        
+      
         setData([])
         if(token){
-            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/antrian/list`,{headers:{"Authorization":"Bearer "+token}}).then(res=>{
-            if(res?.data?.data){
-                console.log(res?.data?.data)
-                setData(()=>res?.data?.data)
-            }
-        }).catch(err=>{
-            console.log(err)
-        })
+            let unmounted = false;
+            let source = axios.CancelToken.source();
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/antrian/list`,{ cancelToken: source.token,headers:{"Authorization":"Bearer "+token}}).then(res=>{
+                if (!unmounted) {
+                  if(res?.data?.data){
+                    console.log(res?.data?.data)
+                    setData(()=>res?.data?.data)
+                    }
+                }   
+            }).catch(err=>{
+                if (!unmounted) {
+                    console.log(err)
+                }
+            })
+            return function () {
+                unmounted = true;
+                source.cancel("Cancelling in cleanup");
+            };
         }
     },[fetchLagi, token, loketId])
    
@@ -181,7 +200,7 @@ const OperatorList = ()=>{
             <div style={{color:"#ffdc40", fontWeight:800, marginTop:'0px',height:'calc(100% + 90px)',writingMode: "vertical-rl",textOrientation: "upright",width:'90px',background:'', fontSize:'50px', letterSpacing:'3px', position:'absolute', left:'0em', }}>{query.get("loket_name").toUpperCase()}</div>
             <div style={{color:"#ffdc40", fontWeight:800, marginTop:'0px',height:'calc(100% + 90px)',writingMode: "vertical-rl",textOrientation: "upright",width:'20%',background:'', fontSize:'50px', letterSpacing:'3px', position:'absolute', right:'1.3em'}}>{query.get("loket_name").toUpperCase()}</div>
             
-            {!boleh?<div style={{position:'fixed',display:'flex', justifyContent:'center',alignItems:'center', left:0,right:0, top:0, bottom:0,zIndex:999999999, background:'rgba(0,0,0,0.9)'}}>
+            {!boleh?<div style={{position:'fixed',display:'flex', justifyContent:'center',alignItems:'center', left:0,right:0, top:0, bottom:0,zIndex:9999, background:'rgba(0,0,0,0.9)'}}>
                 Loading.....
             </div>:""}
 
@@ -493,7 +512,7 @@ const OperatorList = ()=>{
                 ))}
                 
             </div>
-            <ToastContainer></ToastContainer>
+             
         </header> */}
     </>
     )

@@ -35,6 +35,7 @@ const PilihLoket = ()=>{
         }
     },[])
     useEffect(()=>{
+        
          socket2.onopen = () => {
                     console.log("connection open")
                 };
@@ -44,7 +45,7 @@ const PilihLoket = ()=>{
                 socket2.onmessage = (event) => {
                     const data = JSON.parse(event.data);
                     console.log('Real-time update:', data);
-                    if(data.type==="selesai"  ||data.type=="insert-data" || data.type==="insert-antrian" || data.type=="closed" ){
+                    if(data.type==="selesai"  ||data.type=="insert-data" || data.type==="insert-antrian" || data.type=="closed" || data.type=="lepas-loket" ){
                        
                         setFetchLagi((y)=>!y)
                     }
@@ -53,8 +54,13 @@ const PilihLoket = ()=>{
     },[])
     useEffect(()=>{
         if(token){
+            let unmounted = false;
+            let source = axios.CancelToken.source();
+            let unmounted2 = false;
+            let source2 = axios.CancelToken.source();
             setDataLoket([])
-            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/loket/list?page=1&row_perpage=1000000000000&name=`,{cancelToken:source.token,headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                if (!unmounted) {
                 if(res?.data?.data){
                     let k=[]
                     for(let i=0;i<res?.data?.data?.length;i++){
@@ -67,35 +73,47 @@ const PilihLoket = ()=>{
                     setDataLoket(k)
                     
 
-                }
+                }}
             }).catch(err=>{
-                
+                if (!unmounted) {
                 if(err?.response?.status==401){
                     window.location = "/login"
                 }
+            }
             }).finally(()=>{
                 // setDataLoketLoading(false)
 
             })
 
+
+            
             setProfile({})
-            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/profile`,{headers:{Authorization:"Bearer "+token}}).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/admin/user/profile`,{cancelToken:source2.token,headers:{Authorization:"Bearer "+token}}).then((res)=>{
+                if (!unmounted2) {
                 if(res?.data?.data){
                     
                 
                     setProfile(res?.data?.data)
                     
 
-                }
+                }}
             }).catch(err=>{
-                
+                if (!unmounted2) {
                 if(err?.response?.status==401){
                     window.location = "/login"
                 }
+            }
             }).finally(()=>{
                 // setDataLoketLoading(false)
 
             })
+
+            return function () {
+                unmounted = true;
+                source.cancel("Cancelling in cleanup");
+                unmounted2 = true;
+                source2.cancel("Cancelling in cleanup");
+            };
 
         }
         
@@ -181,7 +199,7 @@ textCircle.forEach((value, key) => {
     circle.appendChild(newSpan); 
 });
 
-},30)
+},100)
 }
 
     },[dataLoket?.length])
@@ -374,21 +392,28 @@ textCircle.forEach((value, key) => {
                     if(val?.status=='active'){
                         return(
                             <div className={`item `}  key={val?.name}>
-                            <div id={`beb${val?.id}`} className={`parent-loket card-loket3 cuyitem  ${index==1?"active":""}  `}  style={{filter:val?.user_id?" hue-rotate(120deg)":" sepia(100%)  hue-rotate(120deg)",cursor:'pointer',color:'white',fontSize:'50px', fontWeight:'800', WebkitTextStroke:'1px rgba(0,0,0,0.5)'}} onClick={(e)=>{
-                               
-                                if(val?.user_id ){
-                                    toast.error("Loket sudah di pilih")
-                                }else{
-                                            localStorage.setItem("loket_id",val?.id)
-                                            window.location = `/operator?loket_name=${val.name}`
-
-                                }
-                                    }}  >
+                            <div id={`beb${val?.id}`} className={`parent-loket card-loket3 cuyitem  ${index==1?"active":""}  `}  style={{filter:val?.user_id && val?.user_id!=parseInt(jwtDecode(token)?.sub)?" hue-rotate(120deg)":" sepia(100%)  hue-rotate(120deg)",cursor:'pointer',color:'white',fontSize:'50px', fontWeight:'800', WebkitTextStroke:'1px rgba(0,0,0,0.5)'}}  >
                                     <div className="card-loket">
                                          <div className="content-box-loket">
                                              <h1 className="card-title-loket">{val?.name}</h1>
-                                             <p className="card-content-loket">{val?.user_id?"Sudah Dipilih user = "+"":"Belum Dipilih" }</p>
-                                             <span className="see-more-loket">Pilih</span>
+                                             <p className="card-content-loket">{val?.user_id && val?.user_id==parseInt(jwtDecode(token)?.sub)?"Sudah Di pilih Anda":val?.user_id?"Sudah Dipilih user = "+val?.user_id:"Belum Dipilih" }</p>
+                                             <span className="see-more-loket" style={{display:'flex', justifyContent:'center', alignItems:'center', gap:'20px'}}   >
+                                    <div style={{border:'1px solid white', width:'60px'}} onClick={(e)=>{
+                               
+                               if(val?.user_id && val?.user_id!=parseInt(jwtDecode(token)?.sub) ){
+                                   toast.error("Loket sudah di pilih")
+                               }else{
+                                           localStorage.setItem("loket_id",val?.id)
+                                           window.location = `/operator?loket_name=${val.name}`
+
+                               }
+                                   }}>
+                                        Pilih
+                                    </div>
+                                    {/* {profile?.role=="849c9eee-e30f-4dc5-9816-9b395b0121b7" && val?.user_id?<div onClick={()=>{JSON.stringify({"type":"lepas-loket","body":{"id":val?.id}})}} style={{border:'1px solid white', width:'60px'}}>
+                                        Lepas
+                                    </div>:""} */}
+                                   </span>
                                          </div>
     
                                          <div className="date-box-loket">

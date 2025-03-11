@@ -289,11 +289,23 @@ export default function Tampilan() {
           
       
   useEffect(()=>{
-    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list?row_perpage=3`).then(res=>{
-      setData(res?.data?.data)
+    let unmounted = false;
+    let source = axios.CancelToken.source();
+    axios.get(`${process.env.REACT_APP_BACKEND_HOST_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}/antrian/v1/loket/list?row_perpage=3`,{cancelToken:source.token}).then(res=>{
+      if(!unmounted){
+        setData(res?.data?.data)
+      }
     }).catch(err=>{
-      console.log(err)
+      if(!unmounted){
+        console.log(err)
+      }
     });;
+    return function () {
+      unmounted = true;
+      source.cancel("Cancelling in cleanup");
+    
+  };
+
   },[fetchLagi])
 
   useEffect(()=>{
