@@ -9059,6 +9059,7 @@ label {
   z-index: 3;
   padding-left: 21.563rem;
   padding-top: 20px;
+  margin-bottom: 20px;
   transition: all .2s ease; }
   .header .header-content {
     height: 100%;
