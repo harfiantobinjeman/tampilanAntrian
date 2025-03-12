@@ -68,7 +68,7 @@ const Login = () => {
         if(res?.data?.data?.role=="849c9eee-e30f-4dc5-9816-9b395b0121b7"){
           window.location = "/admin";
         }else{
-          window.location = "/pilihloket";
+          window.location = "/loketpoli";
 
         }
       }).catch(()=>{
@@ -95,7 +95,8 @@ const Login = () => {
             window.location = "/admin";
 
           }else{
-            window.location = "/pilihloket";
+            window.location = "/loketpoli";
+
           }
 
         },10)

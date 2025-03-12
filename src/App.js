@@ -6,6 +6,7 @@ import OperatorList from '../src/operator';
 import Login from '../src/login/Login';
 import Admin from './Admin';
 import PilihLoket from './PilihLoket';
+import PilihLoketPoli from './PilihLoketPoli';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/admin" element={<Admin/>} />
         <Route path="/pilihloket" element={<PilihLoket/>} />
-
+        <Route path="/loketpoli" element={<PilihLoketPoli/>}></Route>
 
         </Routes>
       </BrowserRouter>
